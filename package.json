@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npm run build && npm run global",
     "build": "npm run clean:some && tsc -p .",
-    "global": "npm i -g && ata .",
+    "global": "npm i -g && cd example && ata .",
     "clean:some": "rm -rf ./lib",
     "lint": "eslint ."
   },
