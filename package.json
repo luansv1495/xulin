@@ -1,0 +1,44 @@
+{
+  "name": "ata",
+  "version": "1.0.0",
+  "description": "Architectury test automation ",
+  "main": "./lib/index.js",
+  "bin": {
+    "ata": "bin/ata"
+  },
+  "scripts": {
+    "start": "npm run build && npm run global",
+    "build": "npm run clean:some && tsc -p .",
+    "global": "npm i -g && ata .",
+    "clean:some": "rm -rf ./lib",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "architectury",
+    "test",
+    "automation",
+    "cli"
+  ],
+  "author": "Luan Viana",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^18.11.17",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
+    "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "fs-extra": "^11.1.0",
+    "glob": "^8.0.3",
+    "inquirer": "^9.1.4",
+    "kleur": "^4.1.5",
+    "moment": "^2.29.4"
+  }
+}
