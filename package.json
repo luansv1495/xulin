@@ -1,7 +1,7 @@
 {
   "name": "ata",
   "version": "1.0.0",
-  "description": "Architectury test automation ",
+  "description": "Architecture test automation",
   "main": "./lib/index.js",
   "bin": {
     "ata": "bin/ata"
