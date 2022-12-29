@@ -1,6 +1,6 @@
 {
   "name": "nata-cli",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Architecture test automation",
   "main": "./lib/index.js",
   "repository": "https://github.com/luansv1495/nata-cli",
