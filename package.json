@@ -1,15 +1,15 @@
 {
-  "name": "ata",
+  "name": "nata-cli",
   "version": "1.0.0",
   "description": "Architecture test automation",
   "main": "./lib/index.js",
   "bin": {
-    "ata": "bin/ata"
+    "nata-cli": "bin/nata-cli"
   },
   "scripts": {
     "start": "npm run build && npm run global",
     "build": "npm run clean:some && tsc -p .",
-    "global": "npm i -g && cd example && ata .",
+    "global": "npm i -g && cd example && nata-cli .",
     "clean:some": "rm -rf ./lib",
     "lint": "eslint .",
     "prepare": "husky install",
