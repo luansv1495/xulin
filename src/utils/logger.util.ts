@@ -7,5 +7,5 @@ export const showError = (errorName: string, message: string, nivel = 0) => {
 };
 
 export const showInfo = (message: string) => {
-  console.info(blue('INFO: ') + ' ' + message);
+  console.info(blue('INFO: ') + message);
 };

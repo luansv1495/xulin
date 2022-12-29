@@ -19,33 +19,35 @@ const execRule = (projectPath: string, rule: RuleModel) => {
   return state;
 };
 
-export const handlerRules = (projectPath: string, rules: RuleModel[]) => {
-  showInfo(InfoMessage.execRules);
+export const RuleModule = {
+  handlerRules: (projectPath: string, rules: RuleModel[]) => {
+    showInfo(InfoMessage.execRules);
 
-  const stats = {
-    [HandlerRuleStateEnum.skipped]: 0,
-    [HandlerRuleStateEnum.passed]: 0,
-    [HandlerRuleStateEnum.failed]: 0
-  };
+    const stats = {
+      [HandlerRuleStateEnum.skipped]: 0,
+      [HandlerRuleStateEnum.passed]: 0,
+      [HandlerRuleStateEnum.failed]: 0
+    };
 
-  const startTime = new Date();
+    const startTime = new Date();
 
-  console.info('\n');
+    console.info('\n');
 
-  rules.forEach((rule) => {
-    const state = execRule(projectPath, rule);
-    stats[state] += 1;
-  });
+    rules.forEach((rule) => {
+      const state = execRule(projectPath, rule);
+      stats[state] += 1;
+    });
 
-  const endTime = new Date();
+    const endTime = new Date();
 
-  const execTime = moment(endTime).diff(startTime);
+    const execTime = moment(endTime).diff(startTime);
 
-  showStats(
-    stats[HandlerRuleStateEnum.failed],
-    stats[HandlerRuleStateEnum.passed],
-    stats[HandlerRuleStateEnum.skipped],
-    rules.length,
-    execTime
-  );
+    showStats(
+      stats[HandlerRuleStateEnum.failed],
+      stats[HandlerRuleStateEnum.passed],
+      stats[HandlerRuleStateEnum.skipped],
+      rules.length,
+      execTime
+    );
+  }
 };

@@ -5,22 +5,24 @@ import {
 import { validateRulesField } from '../../rules/validations';
 import { ConfigModel, ConfigProps } from '../models';
 
-export const validateConfigProps = (projectPath: string, jsonData: object) => {
-  const receivedKeys = Object.keys(jsonData);
-  const expectedKeys = Object.values(ConfigProps);
+export const Validate = {
+  configProps: (projectPath: string, jsonData: object) => {
+    const receivedKeys = Object.keys(jsonData);
+    const expectedKeys = Object.values(ConfigProps);
 
-  if (receivedKeys.length === 0) {
-    throw new ConfigFileIsEmptyError();
-  }
-
-  receivedKeys.forEach((receivedKey) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if (!expectedKeys.includes(receivedKey as any)) {
-      throw new UnexpectFieldInConfigError(receivedKey);
+    if (receivedKeys.length === 0) {
+      throw new ConfigFileIsEmptyError();
     }
-  });
 
-  const config = jsonData as ConfigModel;
+    receivedKeys.forEach((receivedKey) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (!expectedKeys.includes(receivedKey as any)) {
+        throw new UnexpectFieldInConfigError(receivedKey);
+      }
+    });
 
-  validateRulesField(projectPath, config.rules);
+    const config = jsonData as ConfigModel;
+
+    validateRulesField(projectPath, config.rules);
+  }
 };

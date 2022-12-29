@@ -1,19 +1,23 @@
-import { existsSync } from 'fs';
-import { getConfigFile } from './modules/config';
+import fs from 'fs';
+import { ConfigModule } from './modules/config';
 import { ProjectPathNotFoundError } from './error';
-import { handlerRules } from './modules/rules';
+import { RuleModule } from './modules/rules';
 import { InfoMessage, showInfo } from './utils';
 
-showInfo(InfoMessage.loadConfig);
+export const main = () => {
+  showInfo(InfoMessage.loadConfig);
 
-const projectPath = process.argv[2];
+  const projectPath = process.argv[2];
 
-if (!existsSync(projectPath)) {
-  new ProjectPathNotFoundError(projectPath).showError();
-} else {
-  const config = getConfigFile(projectPath);
+  if (!fs.existsSync(projectPath)) {
+    new ProjectPathNotFoundError(projectPath).showError();
+  } else {
+    const config = ConfigModule.getConfigFile(projectPath);
 
-  if (config) {
-    handlerRules(projectPath, config.rules);
+    if (config) {
+      RuleModule.handlerRules(projectPath, config.rules);
+    }
   }
-}
+};
+
+main();
