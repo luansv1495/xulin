@@ -1,0 +1,21 @@
+{
+  "rules": [
+    {
+      "name": "filename-pattern-in-folder",
+      "folder": "source/services",
+      "patterns": [
+        "*.service.ts",
+        "*.service.test.ts"
+      ]
+    },
+    {
+      "name": "filename-pattern-in-folder",
+      "folder": "source/pages",
+      "skip": true,
+      "patterns": [
+        "*.page.ts",
+        "*.style.ts"
+      ]
+    }
+  ]
+}

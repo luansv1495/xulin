@@ -1,11 +1,11 @@
 import { readdirSync } from 'fs';
-import glob from 'glob';
+import fg from 'fast-glob';
 import { grey } from 'kleur';
 import path from 'path';
 import { RuleModel } from '../models/rule.model';
 import { FilenamePatternInFolderRule, HandlerRuleStateEnum } from '../models';
-import { showState } from '../utils';
-import { BaseError, FilePatternNotMatchInRuleError } from '../../../error';
+import { FilePatternNotMatchInRuleError } from '../../../error';
+import { Logger } from '../../../utils';
 
 const getFilesInFolder = (
   projectPath: string,
@@ -20,7 +20,7 @@ const getFilesInFolder = (
     if (item.isDirectory()) {
       files = getFilesInFolder(
         projectPath,
-        path.join(completeFolderPath, item.name),
+        path.join(folder, item.name),
         files
       );
     } else {
@@ -38,9 +38,9 @@ const getValidFilesInFolder = (
   let validFiles: string[] = [];
 
   rule.patterns.forEach((pattern) => {
-    const files = glob.sync(pattern, {
-      root: path.join(projectPath, rule.folder)
-    });
+    const files = fg.sync(
+      path.join(projectPath, rule.folder) + '/**/' + pattern
+    );
     validFiles = validFiles.concat(files);
   });
 
@@ -71,39 +71,36 @@ export const verifyFilenamePatternInFolder = (
   projectPath: string,
   rule: FilenamePatternInFolderRule
 ) => {
-  try {
-    if ((rule as RuleModel).skip === true) {
-      showState(HandlerRuleStateEnum.skipped, getLoggerMessage(rule));
-      return HandlerRuleStateEnum.skipped;
-    }
+  console.log(Logger.handler);
 
-    const filesInFolder = getFilesInFolder(projectPath, rule.folder, []);
+  if ((rule as RuleModel).skip === true) {
+    Logger.handler(HandlerRuleStateEnum.skipped, getLoggerMessage(rule));
+    return HandlerRuleStateEnum.skipped;
+  }
 
-    const validFilesInFolder = getValidFilesInFolder(projectPath, rule);
+  const filesInFolder = getFilesInFolder(projectPath, rule.folder, []);
 
-    const invalidFilesInFolder = getInvalidFilesInFolder(
-      filesInFolder,
-      validFilesInFolder
-    );
+  const validFilesInFolder = getValidFilesInFolder(projectPath, rule);
 
-    if (invalidFilesInFolder.length != 0) {
-      showState(HandlerRuleStateEnum.failed, getLoggerMessage(rule));
+  const invalidFilesInFolder = getInvalidFilesInFolder(
+    filesInFolder,
+    validFilesInFolder
+  );
 
-      invalidFilesInFolder.forEach((invalidFile) => {
-        new FilePatternNotMatchInRuleError(
-          invalidFile,
-          (rule as RuleModel).name
-        ).showError(1);
-      });
+  if (invalidFilesInFolder.length != 0) {
+    Logger.handler(HandlerRuleStateEnum.failed, getLoggerMessage(rule));
 
-      return HandlerRuleStateEnum.failed;
-    } else {
-      showState(HandlerRuleStateEnum.passed, getLoggerMessage(rule));
+    invalidFilesInFolder.forEach((invalidFile) => {
+      new FilePatternNotMatchInRuleError(
+        invalidFile,
+        (rule as RuleModel).name
+      ).showError(1);
+    });
 
-      return HandlerRuleStateEnum.passed;
-    }
-  } catch (error: unknown) {
-    (error as BaseError).showError();
     return HandlerRuleStateEnum.failed;
+  } else {
+    Logger.handler(HandlerRuleStateEnum.passed, getLoggerMessage(rule));
+
+    return HandlerRuleStateEnum.passed;
   }
 };

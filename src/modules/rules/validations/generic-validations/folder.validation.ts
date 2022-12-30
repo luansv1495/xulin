@@ -1,4 +1,4 @@
-import { existsSync } from 'fs';
+import fs from 'fs';
 import path from 'path';
 
 export const validateFolder = (
@@ -11,8 +11,8 @@ export const validateFolder = (
     return `"${folder}" is invalid.`;
   } else if (folder.split('.').length != 1) {
     return `"${folder}" is not a folder.`;
-  } else if (!existsSync(path.join(projectPath, folder))) {
-    return `Folder "${folder}" not found.`;
+  } else if (!fs.existsSync(path.join(projectPath, folder))) {
+    return `"${folder}" not found.`;
   }
   return null;
 };

@@ -6,9 +6,15 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/example'],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.ts*'],
+  cache: false,
+  clearMocks: true,
+  silent: true,
   coverageThreshold: {
     global: {
-      lines: 50
+      lines: 95,
+      branches: 95,
+      statements: 95,
+      functions: 95
     }
   }
 };

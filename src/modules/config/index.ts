@@ -4,6 +4,7 @@ import fs from 'fs';
 import { ConfigModel } from './models/config.model';
 import { Validate } from './validations';
 import { BaseError } from '../../error';
+import { Logger } from '../../utils';
 
 export const ConfigModule = {
   getConfigFile: (projectPath: string): ConfigModel | undefined => {
@@ -16,9 +17,11 @@ export const ConfigModule = {
 
       return jsonData;
     } catch (error: unknown) {
-      console.log(error);
-
-      (error as BaseError).showError();
+      if ((error as Error).name === 'SyntaxError') {
+        Logger.error('UnexpectedError', (error as Error).message);
+      } else {
+        (error as BaseError).showError();
+      }
     }
   }
 };

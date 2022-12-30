@@ -2,10 +2,10 @@ import fs from 'fs';
 import { ConfigModule } from './modules/config';
 import { ProjectPathNotFoundError } from './error';
 import { RuleModule } from './modules/rules';
-import { InfoMessage, showInfo } from './utils';
+import { InfoMessage, Logger } from './utils';
 
 export const main = () => {
-  showInfo(InfoMessage.loadConfig);
+  Logger.info(InfoMessage.loadConfig);
 
   const projectPath = process.argv[2];
 
