@@ -6,7 +6,8 @@ import {
   red,
   yellow,
   green,
-  grey
+  grey,
+  bold
 } from 'kleur';
 import fs from 'fs';
 import { main } from '../../../src/index';
@@ -67,7 +68,7 @@ describe('Rules tests', () => {
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       3,
-      bgGreen(' PASS ') +
+      bold(bgGreen(' PASS ')) +
         ` Files in ${grey('source/services')} should contains ${grey(
           '*.ts'
         )}.\n`
@@ -93,7 +94,7 @@ describe('Rules tests', () => {
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       3,
-      bgRed(' FAIL ') +
+      bold(bgRed(' FAIL ')) +
         ` Files in ${grey('source/services')} should contains ${grey(
           '*.js'
         )}.\n`
@@ -119,7 +120,7 @@ describe('Rules tests', () => {
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       3,
-      bgYellow(' SKIP ') +
+      bold(bgYellow(' SKIP ')) +
         ` Files in ${grey('source/services')} should contains ${grey(
           '*.js'
         )}.\n`
@@ -172,9 +173,9 @@ describe('Rules tests', () => {
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
-      `\nStats: ${red('0 failed')}, ${yellow('0 skipped')}, ${green(
-        '1 passed'
-      )}, 1 total.`
+      `\n${bold('Results:')}   ${bold(red('0 failed'))}, ${bold(
+        yellow('0 skipped')
+      )}, ${bold(green('1 passed'))}, 1 total.`
     );
   });
 });
