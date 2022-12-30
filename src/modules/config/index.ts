@@ -10,10 +10,8 @@ export const ConfigModule = {
   getConfigFile: (projectPath: string): ConfigModel | undefined => {
     try {
       const buffer = fs.readFileSync(path.join(projectPath, 'ata.config.json'));
-      console.log(buffer);
-      const jsonData = JSON.parse(buffer.toString());
 
-      console.log(jsonData);
+      const jsonData = JSON.parse(buffer.toString());
 
       Validate.configProps(projectPath, jsonData);
 

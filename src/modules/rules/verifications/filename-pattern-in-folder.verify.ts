@@ -71,8 +71,6 @@ export const verifyFilenamePatternInFolder = (
   projectPath: string,
   rule: FilenamePatternInFolderRule
 ) => {
-  console.log(Logger.handler);
-
   if ((rule as RuleModel).skip === true) {
     Logger.handler(HandlerRuleStateEnum.skipped, getLoggerMessage(rule));
     return HandlerRuleStateEnum.skipped;

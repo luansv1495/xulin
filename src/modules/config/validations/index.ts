@@ -7,8 +7,6 @@ import { ConfigModel, ConfigProps } from '../models';
 
 export const Validate = {
   configProps: (projectPath: string, jsonData: object) => {
-    console.log(jsonData);
-
     const receivedKeys = Object.keys(jsonData);
     const expectedKeys = Object.values(ConfigProps);
 
