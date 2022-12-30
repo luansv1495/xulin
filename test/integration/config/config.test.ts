@@ -11,7 +11,9 @@ describe('Config tests', () => {
   });
 
   test('should display error when config read return unexpected error', () => {
-    fs.writeFileSync('./example/ata.config.json', '');
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(''));
 
     main();
 
@@ -21,7 +23,9 @@ describe('Config tests', () => {
   });
 
   test('should display error when config is empty', () => {
-    fs.writeFileSync('./example/ata.config.json', JSON.stringify({}));
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(JSON.stringify({})));
 
     main();
 
@@ -31,10 +35,11 @@ describe('Config tests', () => {
   });
 
   test('should display error when exists a unexpected field in config', () => {
-    fs.writeFileSync(
-      './example/ata.config.json',
-      JSON.stringify({ fakeKey: '' })
-    );
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() =>
+        Buffer.from(JSON.stringify({ fakeKey: '' }))
+      );
 
     main();
 
@@ -44,10 +49,9 @@ describe('Config tests', () => {
   });
 
   test('should display error when field rules is not a array', () => {
-    fs.writeFileSync(
-      './example/ata.config.json',
-      JSON.stringify({ rules: '' })
-    );
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(JSON.stringify({ rules: '' })));
 
     main();
 
@@ -57,10 +61,11 @@ describe('Config tests', () => {
   });
 
   test('should display error when field rule item is not a json object', () => {
-    fs.writeFileSync(
-      './example/ata.config.json',
-      JSON.stringify({ rules: ['test'] })
-    );
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() =>
+        Buffer.from(JSON.stringify({ rules: ['test'] }))
+      );
 
     main();
 
@@ -70,10 +75,11 @@ describe('Config tests', () => {
   });
 
   test('should display error when field rule item not contains name field', () => {
-    fs.writeFileSync(
-      './example/ata.config.json',
-      JSON.stringify({ rules: [{}] })
-    );
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() =>
+        Buffer.from(JSON.stringify({ rules: [{}] }))
+      );
 
     main();
 
@@ -83,10 +89,11 @@ describe('Config tests', () => {
   });
 
   test('should display error when field name in rule is not a string', () => {
-    fs.writeFileSync(
-      './example/ata.config.json',
-      JSON.stringify({ rules: [{ name: 1 }] })
-    );
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() =>
+        Buffer.from(JSON.stringify({ rules: [{ name: 1 }] }))
+      );
 
     main();
 
@@ -96,10 +103,11 @@ describe('Config tests', () => {
   });
 
   test('should display error when field name in rule is not recognize', () => {
-    fs.writeFileSync(
-      './example/ata.config.json',
-      JSON.stringify({ rules: [{ name: 'fake' }] })
-    );
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockReturnValue(
+        Buffer.from(JSON.stringify({ rules: [{ name: 'fake' }] }))
+      );
 
     main();
 
@@ -109,11 +117,12 @@ describe('Config tests', () => {
   });
 
   test('should display error when field skip in rule is not a boolean', () => {
-    fs.writeFileSync(
-      './example/ata.config.json',
-      JSON.stringify({
-        rules: [{ name: RuleNameEnum.filenamePatternInFolder, skip: 'fake' }]
-      })
+    jest.spyOn(fs, 'readFileSync').mockReturnValue(
+      Buffer.from(
+        JSON.stringify({
+          rules: [{ name: RuleNameEnum.filenamePatternInFolder, skip: 'fake' }]
+        })
+      )
     );
 
     main();
@@ -135,7 +144,9 @@ describe('Config tests', () => {
         }
       ]
     };
-    fs.writeFileSync('./example/ata.config.json', JSON.stringify(fakeConfig));
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
     jest
       .spyOn(RuleModule, 'handlerRules')
       .mockImplementationOnce(() => undefined);

@@ -1,1 +1,1 @@
-{"rules":[{"name":"filename-pattern-in-folder","skip":false,"folder":"source/services","patterns":[".ts"]}]}
+{"rules":[{"name":"filename-pattern-in-folder","skip":false,"patterns":["*.ts"],"folder":"source/services"}]}

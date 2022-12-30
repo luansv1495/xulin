@@ -19,7 +19,9 @@ describe('Filename pattern in folder tests', () => {
         }
       ]
     };
-    fs.writeFileSync('./example/ata.config.json', JSON.stringify(fakeConfig));
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
 
     main();
 
@@ -38,7 +40,9 @@ describe('Filename pattern in folder tests', () => {
         }
       ]
     };
-    fs.writeFileSync('./example/ata.config.json', JSON.stringify(fakeConfig));
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
 
     main();
 
@@ -58,7 +62,9 @@ describe('Filename pattern in folder tests', () => {
         }
       ]
     };
-    fs.writeFileSync('./example/ata.config.json', JSON.stringify(fakeConfig));
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
 
     main();
 
@@ -79,7 +85,9 @@ describe('Filename pattern in folder tests', () => {
         }
       ]
     };
-    fs.writeFileSync('./example/ata.config.json', JSON.stringify(fakeConfig));
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
 
     main();
 
@@ -100,7 +108,9 @@ describe('Filename pattern in folder tests', () => {
         }
       ]
     };
-    fs.writeFileSync('./example/ata.config.json', JSON.stringify(fakeConfig));
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
 
     main();
 
