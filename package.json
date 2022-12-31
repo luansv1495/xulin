@@ -1,9 +1,24 @@
 {
   "name": "nata-cli",
-  "version": "0.0.6",
+  "version": "0.0.7-alpha.0",
   "description": "Architecture test automation",
-  "main": "./lib/index.js",
+  "author": "Luan Viana",
+  "license": "MIT",
+  "keywords": [
+    "architectury",
+    "test",
+    "automation",
+    "cli"
+  ],
   "repository": "https://github.com/luansv1495/nata-cli",
+  "files": [
+    "bin",
+    "lib",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "main": "./lib/index.js",
   "bin": {
     "nata-cli": "bin/nata-cli"
   },
@@ -15,16 +30,10 @@
     "lint": "eslint .",
     "prepare": "husky install",
     "test": "jest",
-    "test:typecheck": "tsc --noEmit"
+    "test:typecheck": "tsc --noEmit",
+    "build:prod": "npm run clean:some && tsc -p . --sourceMap false",
+    "publish": "npm run build:prod && npm publish --access=public"
   },
-  "keywords": [
-    "architectury",
-    "test",
-    "automation",
-    "cli"
-  ],
-  "author": "Luan Viana",
-  "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
