@@ -1,6 +1,6 @@
 {
   "name": "nata-cli",
-  "version": "0.0.7-alpha.0",
+  "version": "0.0.7",
   "description": "Architecture test automation",
   "author": "Luan Viana",
   "license": "MIT",
@@ -32,7 +32,7 @@
     "test": "jest",
     "test:typecheck": "tsc --noEmit",
     "build:prod": "npm run clean:some && tsc -p . --sourceMap false",
-    "publish": "npm run build:prod && npm publish --access=public"
+    "publish:npm": "npm run build:prod && npm publish --access=public"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
