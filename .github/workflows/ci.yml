@@ -6,6 +6,7 @@ on:
 
 jobs:
   lint:
+    name: Check lint
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -15,10 +16,11 @@ jobs:
         cache: 'npm'
     - name: Install Packages
       run: npm install
-    - name: Check linter
+    - name: Check lint
       run: npm run lint
       
   typecheck:
+    name: Check typescript
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -32,6 +34,7 @@ jobs:
       run: npm run test:typecheck
       
   test:
+    name: Tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -41,5 +44,28 @@ jobs:
         cache: 'npm'
     - name: Install Packages
       run: npm install
-    - name: Check types
+    - name: Run tests
+      run: npm run test
+
+  node_os:
+    name: Test in diff os and node version
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [19.x, 18.x, 17.x, 16.x, 14.x, 12.x, "12.22.0"]
+        include:
+        - os: windows-latest
+          node: "16.x"
+        - os: macOS-latest
+          node: "16.x"
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node }}
+        cache: 'npm'
+    - name: Install Packages
+      run: npm install
+    - name: Run tests
       run: npm run test
