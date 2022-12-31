@@ -7,6 +7,7 @@ Architecture test automation
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
   - [Rules](#rules)
+- [License](#license)
 
 ## Getting Started
 
@@ -65,3 +66,7 @@ To skip a rule use the skip field:
     "skip": true,
 }
 ```
+
+## License
+
+Nata-cli is [MIT licensed](./LICENSE).
