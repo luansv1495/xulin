@@ -19,7 +19,7 @@ describe('Config tests', () => {
       red('ERROR: ') +
         'ConfigError ' +
         ErrorMessage.configNotFound +
-        " 'fixtures/without-config/ata.config.json'\n"
+        " 'fixtures/without-config/nata.config.json'\n"
     );
   });
 

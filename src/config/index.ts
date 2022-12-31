@@ -12,7 +12,7 @@ export class ConfigModule {
   ) {}
 
   getConfigFile = (): ConfigModel | undefined => {
-    const buffer = fs.readFileSync(path.join(this.rootDir, 'ata.config.json'));
+    const buffer = fs.readFileSync(path.join(this.rootDir, 'nata.config.json'));
 
     const jsonData = JSON.parse(buffer.toString());
 

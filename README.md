@@ -1,7 +1,9 @@
 # Nata-cli
- Architecture test automation
- 
+
+Architecture test automation
+
 ## Table of Contents
+
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
   - [Rules](#rules)
@@ -24,7 +26,7 @@ Add the following section to your `package.json`:
 }
 ```
 
-Before running you must create the configuration file `ata.config.json`:
+Before running you must create the configuration file `nata.config.json`:
 
 ```json
 {
@@ -47,9 +49,9 @@ Exec time: 00:00:00.001
 
 ```json
 {
-    "name": "filename-pattern-in-folder",
-    "patterns": ["*.ts"],
-    "folder": "source/services"
+  "name": "filename-pattern-in-folder",
+  "patterns": ["*.ts"],
+  "folder": "source/services"
 }
 ```
 
