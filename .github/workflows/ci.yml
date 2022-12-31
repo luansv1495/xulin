@@ -15,16 +15,19 @@ jobs:
         node-version: '16.x'
     - uses: actions/checkout@v3
     - name: 'Cache node_modules'
+      id: node_modules_cache
       uses: actions/cache@v3
       with:
         path: '~/.npm'
-        key: "ubuntu-latest-node-v16-${{ hashFiles('**/package-lock.json') }}"
+        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json')
         restore-keys: |
-          ubuntu-latest-node-v16-
+          ${{ runner.os }}-node-
     - name: Install Packages
+      if: steps.node_modules_cache.outputs.cache-hit != 'true'
       run: npm install
     - name: Check linter
       run: npm run lint
+      
   typecheck:
     runs-on: ubuntu-latest
     steps:
@@ -36,6 +39,7 @@ jobs:
       run: npm install
     - name: Check types
       run: npm run test:typecheck
+      
   test:
     runs-on: ubuntu-latest
     steps:
