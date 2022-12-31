@@ -2,7 +2,7 @@
 
 Architecture test automation
 
-[![Continuous integration](https://github.com/luansv1495/nata-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/luansv1495/nata-cli/actions/workflows/ci.yml)
+[![Continuous integration](https://github.com/luansv1495/nata-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/luansv1495/nata-cli/actions/workflows/ci.yml) [![Coverage Status](https://coveralls.io/repos/github/luansv1495/nata-cli/badge.svg?branch=main)](https://coveralls.io/github/luansv1495/nata-cli?branch=main)
 
 ## Table of Contents
 
