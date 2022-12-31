@@ -2,11 +2,10 @@ import { readdirSync } from 'fs';
 import fg from 'fast-glob';
 import { grey } from 'kleur';
 import path from 'path';
-import { HandlerRuleStateEnum } from '../models';
-import { FilePatternNotMatchInRuleError } from '../../../error';
-import { Logger } from '../../../utils';
-import { FilenamePatternInFolderModel } from '../../../rules/filename-pattern-in-folder';
-import { RuleModel } from '../../../rules/rule.model';
+import { FilePatternNotMatchInRuleError } from '../../error';
+import { Logger } from '../../utils';
+import { FilenamePatternInFolderModel } from '../filename-pattern-in-folder';
+import { HandlerStateEnum, RuleModel } from '../rule.model';
 
 const getFilesInFolder = (
   projectPath: string,
@@ -73,8 +72,8 @@ export const verifyFilenamePatternInFolder = (
   rule: FilenamePatternInFolderModel
 ) => {
   if ((rule as RuleModel).skip === true) {
-    Logger.handler(HandlerRuleStateEnum.skipped, getLoggerMessage(rule));
-    return HandlerRuleStateEnum.skipped;
+    Logger.handler(HandlerStateEnum.skipped, getLoggerMessage(rule));
+    return HandlerStateEnum.skipped;
   }
 
   const filesInFolder = getFilesInFolder(projectPath, rule.folder, []);
@@ -87,7 +86,7 @@ export const verifyFilenamePatternInFolder = (
   );
 
   if (invalidFilesInFolder.length != 0) {
-    Logger.handler(HandlerRuleStateEnum.failed, getLoggerMessage(rule));
+    Logger.handler(HandlerStateEnum.failed, getLoggerMessage(rule));
 
     invalidFilesInFolder.forEach((invalidFile) => {
       new FilePatternNotMatchInRuleError(
@@ -96,10 +95,10 @@ export const verifyFilenamePatternInFolder = (
       ).showError(1);
     });
 
-    return HandlerRuleStateEnum.failed;
+    return HandlerStateEnum.failed;
   } else {
-    Logger.handler(HandlerRuleStateEnum.passed, getLoggerMessage(rule));
+    Logger.handler(HandlerStateEnum.passed, getLoggerMessage(rule));
 
-    return HandlerRuleStateEnum.passed;
+    return HandlerStateEnum.passed;
   }
 };

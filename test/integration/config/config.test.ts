@@ -1,7 +1,6 @@
 import { red } from 'kleur';
 import fs from 'fs';
 import { main } from '../../../src/index';
-import { RuleModule } from '../../../src/modules/rules';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
 
 describe('Config tests', () => {
@@ -130,32 +129,6 @@ describe('Config tests', () => {
     expect(process.stdout.write).toBeCalledWith(
       red('ERROR: ') +
         'RuleError Rule field skip with value "fake" is not a boolean.\n'
-    );
-  });
-
-  test('should return a config when config object file is valid', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: false,
-          folder: 'source/services',
-          patterns: ['.ts']
-        }
-      ]
-    };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
-    jest
-      .spyOn(RuleModule, 'handlerRules')
-      .mockImplementationOnce(() => undefined);
-
-    main();
-
-    expect(RuleModule.handlerRules).toBeCalledWith(
-      './example',
-      fakeConfig.rules
     );
   });
 });

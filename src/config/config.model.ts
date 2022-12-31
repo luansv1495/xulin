@@ -1,4 +1,4 @@
-import { RuleModel } from '../../../rules/rule.model';
+import { RuleModel } from '../rules/rule.model';
 
 export interface ConfigModel {
   rules: RuleModel[];

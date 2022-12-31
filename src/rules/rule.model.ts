@@ -13,3 +13,9 @@ export enum RuleProps {
 export enum RuleNameEnum {
   filenamePatternInFolder = 'filename-pattern-in-folder'
 }
+
+export enum HandlerStateEnum {
+  skipped = 'skipped',
+  passed = 'passed',
+  failed = 'failed'
+}

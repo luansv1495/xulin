@@ -2,7 +2,6 @@ import { Logger } from '../utils';
 
 export class BaseError extends Error {
   constructor(message: string, name: string) {
-    /* istanbul ignore next */
     super(message);
     this.name = name;
   }

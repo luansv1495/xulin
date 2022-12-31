@@ -9,7 +9,7 @@ import {
   bold
 } from 'kleur';
 import moment from 'moment';
-import { HandlerRuleStateEnum } from '../modules/rules/models';
+import { HandlerStateEnum } from '../rules/rule.model';
 
 export const Logger = {
   error: (errorName: string, message: string, nivel = 0) => {
@@ -22,10 +22,10 @@ export const Logger = {
     process.stdout.write(blue('INFO: ') + message + '\n');
   },
 
-  handler: (state: HandlerRuleStateEnum, message: string) => {
-    if (state === HandlerRuleStateEnum.failed) {
+  handler: (state: HandlerStateEnum, message: string) => {
+    if (state === HandlerStateEnum.failed) {
       process.stdout.write(bold(bgRed(' FAIL ')) + ' ' + message + '\n');
-    } else if (state === HandlerRuleStateEnum.passed) {
+    } else if (state === HandlerStateEnum.passed) {
       process.stdout.write(bold(bgGreen(' PASS ')) + ' ' + message + '\n');
     } else {
       process.stdout.write(bold(bgYellow(' SKIP ')) + ' ' + message + '\n');
