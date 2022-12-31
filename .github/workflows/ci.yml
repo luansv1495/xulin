@@ -2,9 +2,7 @@ name: Continuous integration
 
 on:
   push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
 
 jobs:
   lint:
@@ -14,14 +12,6 @@ jobs:
       with:
         node-version: '16.x'
     - uses: actions/checkout@v3
-    - name: 'Cache node_modules'
-      id: node_modules_cache
-      uses: actions/cache@v3
-      with:
-        path: '~/.npm'
-        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
     - name: Install Packages
       run: npm install
     - name: Check linter
