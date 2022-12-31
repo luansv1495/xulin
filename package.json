@@ -14,7 +14,8 @@
     "clean:some": "rm -rf ./lib",
     "lint": "eslint .",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "jest",
+    "test:typecheck": "tsc --noEmit"
   },
   "keywords": [
     "architectury",
