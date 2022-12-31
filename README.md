@@ -2,6 +2,8 @@
 
 Architecture test automation
 
+[![Continuous integration](https://github.com/luansv1495/nata-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/luansv1495/nata-cli/actions/workflows/ci.yml)
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
