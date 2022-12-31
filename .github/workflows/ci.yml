@@ -11,6 +11,7 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: '16.x'
+        cache: 'npm'
     - uses: actions/checkout@v3
     - name: Install Packages
       run: npm install
@@ -23,6 +24,7 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: '16.x'
+        cache: 'npm'
     - uses: actions/checkout@v3
     - name: Install Packages
       run: npm install
@@ -35,6 +37,7 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: '16.x'
+        cache: 'npm'
     - uses: actions/checkout@v3
     - name: Install Packages
       run: npm install
