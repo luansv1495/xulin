@@ -2,11 +2,25 @@ import { red } from 'kleur';
 import fs from 'fs';
 import { main } from '../../../src/index';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
+import { ErrorMessage } from '../../../src/utils';
 
 describe('Config tests', () => {
   beforeAll(() => {
     jest.spyOn(process.stdout, 'write').mockImplementationOnce(() => false);
     process.argv = ['node', 'ata', './example'];
+  });
+
+  test('should display error when project path not found', () => {
+    process.argv = ['node', 'ata', './fixtures/without-config'];
+
+    main();
+
+    expect(process.stdout.write).toBeCalledWith(
+      red('ERROR: ') +
+        'ConfigError ' +
+        ErrorMessage.configNotFound +
+        " 'fixtures/without-config/ata.config.json'\n"
+    );
   });
 
   test('should display error when config read return unexpected error', () => {

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { BaseError, ProjectPathNotFoundError } from './error';
-import { InfoMessage, Logger } from './utils';
+import { ErrorMessage, InfoMessage, Logger } from './utils';
 import { RulesModule } from './rules';
 import { ConfigModule } from './config';
 
@@ -25,6 +25,10 @@ export const main = () => {
   } catch (error: unknown) {
     if ((error as Error).name === 'SyntaxError') {
       Logger.error('UnexpectedError', (error as Error).message);
+    } else if (
+      (error as Error).message.startsWith(ErrorMessage.configNotFound)
+    ) {
+      Logger.error('ConfigError', (error as Error).message);
     } else {
       (error as BaseError).showError();
     }
