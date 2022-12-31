@@ -16,7 +16,7 @@ import { RuleNameEnum } from '../../../src/rules/rule.model';
 describe('Rules tests', () => {
   beforeAll(() => {
     jest.spyOn(process.stdout, 'write').mockImplementationOnce(() => false);
-    process.argv = ['node', 'ata', './example'];
+    process.argv = ['node', 'ata', './fixtures/example'];
   });
 
   test('should display exec rules message', () => {
@@ -142,7 +142,7 @@ describe('Rules tests', () => {
       '      ' +
         red('ERROR: ') +
         `RuleError ${grey('filename-pattern-in-folder')}: File ${grey(
-          'example/source/services/api.service.test.ts'
+          'fixtures/example/source/services/api.service.test.ts'
         )} not match.\n`
     );
   });

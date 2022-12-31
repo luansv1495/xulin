@@ -7,7 +7,7 @@ import { ErrorMessage } from '../../../src/utils';
 describe('Config tests', () => {
   beforeAll(() => {
     jest.spyOn(process.stdout, 'write').mockImplementationOnce(() => false);
-    process.argv = ['node', 'ata', './example'];
+    process.argv = ['node', 'ata', './fixtures/example'];
   });
 
   test('should display error when project path not found', () => {

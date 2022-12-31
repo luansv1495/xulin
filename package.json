@@ -10,7 +10,7 @@
   "scripts": {
     "start": "npm run build && npm run global",
     "build": "npm run clean:some && tsc -p .",
-    "global": "npm i -g && cd example && nata-cli .",
+    "global": "npm i -g && cd fixtures/example && nata-cli .",
     "clean:some": "rm -rf ./lib",
     "lint": "eslint .",
     "prepare": "husky install",

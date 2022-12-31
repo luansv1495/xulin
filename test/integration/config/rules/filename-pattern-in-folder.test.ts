@@ -6,7 +6,7 @@ import { RuleNameEnum } from '../../../../src/rules/rule.model';
 describe('Filename pattern in folder tests', () => {
   beforeAll(() => {
     jest.spyOn(process.stdout, 'write').mockImplementationOnce(() => false);
-    process.argv = ['node', 'ata', './example'];
+    process.argv = ['node', 'ata', './fixtures/example'];
   });
 
   test('should display error when exists a unexpect field', () => {
