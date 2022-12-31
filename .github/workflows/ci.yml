@@ -15,7 +15,7 @@ jobs:
         node-version: '16.x'
     - uses: actions/checkout@v3
     - name: Install Packages
-      run: npm ci
+      run: npm install
     - name: Check linter
       run: npm run lint
   typecheck:
@@ -26,7 +26,7 @@ jobs:
         node-version: '16.x'
     - uses: actions/checkout@v3
     - name: Install Packages
-      run: npm ci
+      run: npm install
     - name: Check types
       run: npm run test:typecheck
   test:
@@ -37,6 +37,6 @@ jobs:
         node-version: '16.x'
     - uses: actions/checkout@v3
     - name: Install Packages
-      run: npm ci
+      run: npm install
     - name: Check types
       run: npm run test
