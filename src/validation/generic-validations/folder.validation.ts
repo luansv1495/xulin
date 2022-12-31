@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export const validateFolder = (
-  projectPath: string,
+  rootDir: string,
   folder: unknown
 ): string | null => {
   if (typeof folder != 'string') {
@@ -11,7 +11,7 @@ export const validateFolder = (
     return `"${folder}" is invalid.`;
   } else if (folder.split('.').length != 1) {
     return `"${folder}" is not a folder.`;
-  } else if (!fs.existsSync(path.join(projectPath, folder))) {
+  } else if (!fs.existsSync(path.join(rootDir, folder))) {
     return `"${folder}" not found.`;
   }
   return null;

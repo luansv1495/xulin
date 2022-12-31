@@ -8,7 +8,7 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.ts*'],
   cache: false,
   clearMocks: true,
-  silent: true,
+  silent: false,
   coverageThreshold: {
     global: {
       lines: 95,

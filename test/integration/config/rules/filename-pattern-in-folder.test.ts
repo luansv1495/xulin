@@ -1,7 +1,7 @@
 import { red } from 'kleur';
 import fs from 'fs';
 import { main } from '../../../../src';
-import { RuleNameEnum } from '../../../../src/modules/rules/models';
+import { RuleNameEnum } from '../../../../src/rules/rule.model';
 
 describe('Filename pattern in folder tests', () => {
   beforeAll(() => {

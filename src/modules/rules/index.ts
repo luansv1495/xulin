@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { RuleModel, RuleNameEnum } from './models/rule.model';
 import { HandlerRuleStateEnum } from './models';
 import { verifyFilenamePatternInFolder } from './verifications';
 import { InfoMessage, Logger } from '../../utils';
+import { RuleModel, RuleNameEnum } from '../../rules/rule.model';
 
 export const RuleModule = {
   execRule: (projectPath: string, rule: RuleModel) => {

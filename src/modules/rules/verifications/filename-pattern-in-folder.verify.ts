@@ -2,10 +2,11 @@ import { readdirSync } from 'fs';
 import fg from 'fast-glob';
 import { grey } from 'kleur';
 import path from 'path';
-import { RuleModel } from '../models/rule.model';
-import { FilenamePatternInFolderRule, HandlerRuleStateEnum } from '../models';
+import { HandlerRuleStateEnum } from '../models';
 import { FilePatternNotMatchInRuleError } from '../../../error';
 import { Logger } from '../../../utils';
+import { FilenamePatternInFolderModel } from '../../../rules/filename-pattern-in-folder';
+import { RuleModel } from '../../../rules/rule.model';
 
 const getFilesInFolder = (
   projectPath: string,
@@ -33,7 +34,7 @@ const getFilesInFolder = (
 
 const getValidFilesInFolder = (
   projectPath: string,
-  rule: FilenamePatternInFolderRule
+  rule: FilenamePatternInFolderModel
 ): string[] => {
   let validFiles: string[] = [];
 
@@ -61,7 +62,7 @@ const getInvalidFilesInFolder = (
   return invalidFiles;
 };
 
-const getLoggerMessage = (rule: FilenamePatternInFolderRule): string => {
+const getLoggerMessage = (rule: FilenamePatternInFolderModel): string => {
   return `Files in ${grey(rule.folder)} should contains ${grey(
     rule.patterns.join(',')
   )}.`;
@@ -69,7 +70,7 @@ const getLoggerMessage = (rule: FilenamePatternInFolderRule): string => {
 
 export const verifyFilenamePatternInFolder = (
   projectPath: string,
-  rule: FilenamePatternInFolderRule
+  rule: FilenamePatternInFolderModel
 ) => {
   if ((rule as RuleModel).skip === true) {
     Logger.handler(HandlerRuleStateEnum.skipped, getLoggerMessage(rule));

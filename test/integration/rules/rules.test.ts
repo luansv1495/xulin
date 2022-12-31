@@ -11,11 +11,9 @@ import {
 } from 'kleur';
 import fs from 'fs';
 import { main } from '../../../src/index';
-import {
-  HandlerRuleStateEnum,
-  RuleNameEnum
-} from '../../../src/modules/rules/models';
+import { HandlerRuleStateEnum } from '../../../src/modules/rules/models';
 import { RuleModule } from '../../../src/modules/rules';
+import { RuleNameEnum } from '../../../src/rules/rule.model';
 
 describe('Rules tests', () => {
   beforeAll(() => {
