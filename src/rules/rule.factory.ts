@@ -3,25 +3,28 @@ import {
   FilenamePatternInFolderProps,
   FilenamePatternInFolderRule
 } from './filename-pattern-in-folder';
-import { RuleModel, RuleNameEnum, RuleProps } from './rule.model';
+import {
+  VerifyStateEnum,
+  RuleModel,
+  RuleNameEnum,
+  RuleProps
+} from './rule.model';
 
 export class RuleFactory {
   constructor(
-    private readonly rule: unknown,
+    private readonly rule: RuleModel,
     private readonly rootDir: string
   ) {}
 
   validate = () => {
-    new BaseRule().validate({
+    new BaseRule(this.rule).validate({
       rule: this.rule,
       rootDir: this.rootDir,
       expectedFields: Object.values(RuleNameEnum)
     });
 
-    if (
-      (this.rule as RuleModel).name === RuleNameEnum.filenamePatternInFolder
-    ) {
-      new FilenamePatternInFolderRule().validate({
+    if (this.rule.name === RuleNameEnum.filenamePatternInFolder) {
+      new FilenamePatternInFolderRule(this.rule).validate({
         rule: this.rule,
         rootDir: this.rootDir,
         expectedFields: (
@@ -29,5 +32,15 @@ export class RuleFactory {
         ).concat(Object.values(RuleProps) as string[])
       });
     }
+  };
+
+  verify = () => {
+    let state = VerifyStateEnum.skipped;
+
+    if (this.rule.name === RuleNameEnum.filenamePatternInFolder) {
+      state = new FilenamePatternInFolderRule(this.rule).verify(this.rootDir);
+    }
+
+    return state;
   };
 }

@@ -14,7 +14,7 @@ export enum RuleNameEnum {
   filenamePatternInFolder = 'filename-pattern-in-folder'
 }
 
-export enum HandlerStateEnum {
+export enum VerifyStateEnum {
   skipped = 'skipped',
   passed = 'passed',
   failed = 'failed'

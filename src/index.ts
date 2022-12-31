@@ -19,7 +19,7 @@ export const main = () => {
       const config = configModule.getConfigFile();
 
       if (config) {
-        rulesModule.handler();
+        rulesModule.verify();
       }
     }
   } catch (error: unknown) {
