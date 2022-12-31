@@ -11,9 +11,6 @@ coverage
 # Dependency directories
 node_modules/
 
-# Generate output
-lib/
-
 # Other files
 package-lock.json
 yarn.lock
