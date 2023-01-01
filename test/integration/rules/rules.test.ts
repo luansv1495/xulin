@@ -78,7 +78,7 @@ describe('Rules tests', () => {
       5,
       `\n${bold('Checks:')}       ${bold(red('0 failed'))}, ${bold(
         green('3 passed')
-      )}`
+      )}, 3 total.`
     );
   });
 });

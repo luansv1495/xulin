@@ -52,7 +52,9 @@ export const Logger = {
     const allPasseds = bold(green(all.passed + ' passed'));
 
     process.stdout.write(
-      `\n${bold('Checks:')}       ${allFailures}, ${allPasseds}`
+      `\n${bold('Checks:')}       ${allFailures}, ${allPasseds}, ${
+        all.failed + all.passed
+      } total.`
     );
 
     const execTimeHuman = moment

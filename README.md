@@ -40,8 +40,9 @@ Before running you must create the configuration file `nata.config.json`:
 Finally, run `npm run test:arch` and Nata-cli will print this message:
 
 ```bash
-Results:   0 failed, 0 skipped, 0 passed, 0 total.
-Exec time: 00:00:00.001
+Check Suites: 0 failed, 0 skipped, 0 passed, 0 total.
+Checks:       0 failed, 0 passed, 0 total.
+Exec time:    00:00:00.001
 ```
 
 ## Configuration
