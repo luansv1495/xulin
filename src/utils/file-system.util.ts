@@ -40,5 +40,13 @@ export const FileSystem = {
     });
 
     return validFiles;
+  },
+
+  getFoldersInFolder: (rootDir: string, folder: string): string[] => {
+    const completeFolderPath = path.join(rootDir, folder);
+
+    const items = readdirSync(completeFolderPath, { withFileTypes: true });
+
+    return items.filter((item) => item.isDirectory()).map((item) => item.name);
   }
 };

@@ -7,6 +7,16 @@
         "*.ts"
       ],
       "folder": "source/services"
+    },
+    {
+      "name": "folder-name-in-folder",
+      "skip": false,
+      "names": [
+        "services",
+        "pages",
+        "configs"
+      ],
+      "folder": "source"
     }
   ]
 }

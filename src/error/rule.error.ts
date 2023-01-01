@@ -53,30 +53,28 @@ export class RuleSkipIsNotBooleanError extends RuleError {
 export class UnexpectFieldInRuleError extends RuleError {
   constructor(field: unknown, ruleName: string) {
     /* istanbul ignore next */
-    super(`Unexpected field "${field}" in ${ruleName} rule.`);
+    super(`Unexpected field "${field}". In ${ruleName} rule.`);
   }
 }
 
 export class FieldIsRequiredInRuleError extends RuleError {
   constructor(field: unknown, ruleName: string) {
     /* istanbul ignore next */
-    super(`Field "${field}" is required in ${ruleName} rule.`);
+    super(`Field "${field}" is required. In ${ruleName} rule.`);
   }
 }
 
 export class FolderIsInvalidInRuleError extends RuleError {
   constructor(result: string, ruleName: string) {
     /* istanbul ignore next */
-    super(
-      `Field folder with value ${result}`.replace('.', ` in ${ruleName} rule.`)
-    );
+    super(`Field folder with value ${result} In ${ruleName} rule.`);
   }
 }
 
 export class PatternsIsInvalidInRuleError extends RuleError {
   constructor(result: string, ruleName: string) {
     /* istanbul ignore next */
-    super(`Pattern with value ${result}`.replace('.', ` in ${ruleName} rule.`));
+    super(`Pattern with value ${result} In ${ruleName} rule.`);
   }
 }
 
@@ -84,5 +82,19 @@ export class FilePatternNotMatchInRuleError extends RuleError {
   constructor(fileName: string, ruleName: string) {
     /* istanbul ignore next */
     super(`${grey(ruleName)}: File ${grey(fileName)} not match.`);
+  }
+}
+
+export class FolderNameIsInvalidInRuleError extends RuleError {
+  constructor(result: string, ruleName: string) {
+    /* istanbul ignore next */
+    super(`Folder name with value ${result} In ${ruleName} rule.`);
+  }
+}
+
+export class FolderNameNotMatchInRuleError extends RuleError {
+  constructor(folderName: string, ruleName: string) {
+    /* istanbul ignore next */
+    super(`${grey(ruleName)}: Folder ${grey(folderName)} not match.`);
   }
 }

@@ -48,13 +48,23 @@ Exec time: 00:00:00.001
 
 ### Rules
 
-1. Verify that files in a directory follow specified patterns:
+1. Check that files in a directory follow specified patterns:
 
 ```json
 {
   "name": "filename-pattern-in-folder",
   "patterns": ["*.ts"],
   "folder": "source/services"
+}
+```
+
+2. Check that folder names in a directory follow the specified folder name:
+
+```json
+{
+  "name": "folder-name-in-folder",
+  "names": ["services", "pages", "config"],
+  "folder": "source"
 }
 ```
 
