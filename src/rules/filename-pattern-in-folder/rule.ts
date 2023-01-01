@@ -9,7 +9,7 @@ import {
   IsValidFolderValidation
 } from '../../validation';
 import { BaseRule } from '../base.rule';
-import { RuleModel, VerifyStateEnum } from '../rule.model';
+import { RuleModel, VerifyRuleState, VerifyStateEnum } from '../rule.model';
 
 export class FilenamePatternInFolderRule extends BaseRule {
   validations: BaseValidation[] = [
@@ -42,7 +42,7 @@ export class FilenamePatternInFolderRule extends BaseRule {
     return invalidFiles;
   };
 
-  customVerify(rootDir: string): VerifyStateEnum {
+  customVerify(rootDir: string): VerifyRuleState {
     const filesInFolder = FileSystem.getFilesInFolder(
       rootDir,
       this.rule.folder,
@@ -70,10 +70,18 @@ export class FilenamePatternInFolderRule extends BaseRule {
         ).showError(1);
       });
 
-      return VerifyStateEnum.failed;
+      return {
+        state: VerifyStateEnum.failed,
+        passed: validFilesInFolder.length,
+        failed: invalidFilesInFolder.length
+      };
     } else {
       Logger.handler(VerifyStateEnum.passed, this.verifyMessage);
-      return VerifyStateEnum.passed;
+      return {
+        state: VerifyStateEnum.passed,
+        passed: validFilesInFolder.length,
+        failed: invalidFilesInFolder.length
+      };
     }
   }
 }

@@ -32,7 +32,7 @@ describe('Rules tests', () => {
     );
   });
 
-  test('should display stats count when handler rules is finish', () => {
+  test('should display suite stats count when handler rules is finish', () => {
     const fakeConfig = {
       rules: [
         {
@@ -51,9 +51,34 @@ describe('Rules tests', () => {
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
-      `\n${bold('Results:')}   ${bold(red('0 failed'))}, ${bold(
+      `\n${bold('Check Suites:')} ${bold(red('0 failed'))}, ${bold(
         yellow('0 skipped')
       )}, ${bold(green('1 passed'))}, 1 total.`
+    );
+  });
+
+  test('should display all stats count when handler rules is finish', () => {
+    const fakeConfig = {
+      rules: [
+        {
+          name: RuleNameEnum.filenamePatternInFolder,
+          skip: false,
+          patterns: ['*.ts'],
+          folder: 'source/services'
+        }
+      ]
+    };
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+
+    main();
+
+    expect(process.stdout.write).toHaveBeenNthCalledWith(
+      5,
+      `\n${bold('Checks:')}       ${bold(red('0 failed'))}, ${bold(
+        green('3 passed')
+      )}`
     );
   });
 });

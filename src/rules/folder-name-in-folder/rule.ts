@@ -9,7 +9,7 @@ import {
   IsValidFolderValidation
 } from '../../validation';
 import { BaseRule } from '../base.rule';
-import { RuleModel, VerifyStateEnum } from '../rule.model';
+import { RuleModel, VerifyRuleState, VerifyStateEnum } from '../rule.model';
 
 export class FolderNameInFolderRule extends BaseRule {
   validations: BaseValidation[] = [
@@ -39,11 +39,24 @@ export class FolderNameInFolderRule extends BaseRule {
     return invalidFolders;
   };
 
-  customVerify(rootDir: string): VerifyStateEnum {
+  getValidFolderInFolder = (foldersInFolder: string[]): string[] => {
+    const validFolders = foldersInFolder.filter((folder) => {
+      if (this.rule.names.includes(folder)) {
+        return true;
+      }
+      return false;
+    });
+
+    return validFolders;
+  };
+
+  customVerify(rootDir: string): VerifyRuleState {
     const foldersInFolder = FileSystem.getFoldersInFolder(
       rootDir,
       this.rule.folder
     );
+
+    const validFolders = this.getValidFolderInFolder(foldersInFolder);
 
     const invalidFolders = this.getInvalidFolderInFolder(foldersInFolder);
 
@@ -54,10 +67,18 @@ export class FolderNameInFolderRule extends BaseRule {
         new FolderNameNotMatchInRuleError(folder, this.rule.name).showError(1);
       });
 
-      return VerifyStateEnum.failed;
+      return {
+        state: VerifyStateEnum.failed,
+        passed: validFolders.length,
+        failed: invalidFolders.length
+      };
     } else {
       Logger.handler(VerifyStateEnum.passed, this.verifyMessage);
-      return VerifyStateEnum.passed;
+      return {
+        state: VerifyStateEnum.passed,
+        passed: validFolders.length,
+        failed: invalidFolders.length
+      };
     }
   }
 }

@@ -33,26 +33,32 @@ export const Logger = {
   },
 
   stats: (
-    failure: number,
-    passed: number,
-    skipped: number,
+    suite: { failed: number; passed: number; skipped: number },
+    all: { failed: number; passed: number },
     total: number,
     execTime: number
   ) => {
-    const failures = bold(red(failure + ' failed'));
-    const skippeds = bold(yellow(skipped + ' skipped'));
-    const passeds = bold(green(passed + ' passed'));
+    const suiteFailures = bold(red(suite.failed + ' failed'));
+    const suiteSkippeds = bold(yellow(suite.skipped + ' skipped'));
+    const suitePasseds = bold(green(suite.passed + ' passed'));
 
     process.stdout.write(
       `\n${bold(
-        'Results:'
-      )}   ${failures}, ${skippeds}, ${passeds}, ${total} total.`
+        'Check Suites:'
+      )} ${suiteFailures}, ${suiteSkippeds}, ${suitePasseds}, ${total} total.`
+    );
+
+    const allFailures = bold(red(all.failed + ' failed'));
+    const allPasseds = bold(green(all.passed + ' passed'));
+
+    process.stdout.write(
+      `\n${bold('Checks:')}       ${allFailures}, ${allPasseds}`
     );
 
     const execTimeHuman = moment
       .utc(moment.duration(execTime).asMilliseconds())
       .format('HH:mm:ss.SSS');
 
-    process.stdout.write(`\n${bold('Exec time:')} ${execTimeHuman}\n`);
+    process.stdout.write(`\n${bold('Exec time:')}    ${execTimeHuman}\n`);
   }
 };

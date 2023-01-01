@@ -22,3 +22,9 @@ export enum VerifyStateEnum {
   passed = 'passed',
   failed = 'failed'
 }
+
+export interface VerifyRuleState {
+  passed: number;
+  failed: number;
+  state: VerifyStateEnum;
+}

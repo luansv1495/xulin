@@ -11,7 +11,8 @@ import {
   VerifyStateEnum,
   RuleModel,
   RuleNameEnum,
-  RuleProps
+  RuleProps,
+  VerifyRuleState
 } from './rule.model';
 
 export class RuleFactory {
@@ -46,8 +47,12 @@ export class RuleFactory {
     }
   };
 
-  verify = () => {
-    let state = VerifyStateEnum.skipped;
+  verify = (): VerifyRuleState => {
+    let state = {
+      state: VerifyStateEnum.skipped,
+      passed: 0,
+      failed: 0
+    } as VerifyRuleState;
 
     if (this.rule.name === RuleNameEnum.filenamePatternInFolder) {
       state = new FilenamePatternInFolderRule(this.rule).verify(this.rootDir);

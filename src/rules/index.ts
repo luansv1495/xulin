@@ -7,9 +7,15 @@ import { VerifyStateEnum, RuleModel } from './rule.model';
 export class RulesModule {
   private rules: RuleModel[] = [];
   stats = {
-    [VerifyStateEnum.skipped]: 0,
-    [VerifyStateEnum.passed]: 0,
-    [VerifyStateEnum.failed]: 0
+    suite: {
+      [VerifyStateEnum.skipped]: 0,
+      [VerifyStateEnum.passed]: 0,
+      [VerifyStateEnum.failed]: 0
+    },
+    all: {
+      [VerifyStateEnum.passed]: 0,
+      [VerifyStateEnum.failed]: 0
+    }
   };
 
   constructor(private readonly rootDir: string) {}
@@ -31,13 +37,7 @@ export class RulesModule {
 
     const execTime = moment(endTime).diff(startTime);
 
-    Logger.stats(
-      this.stats[VerifyStateEnum.failed],
-      this.stats[VerifyStateEnum.passed],
-      this.stats[VerifyStateEnum.skipped],
-      this.rules.length,
-      execTime
-    );
+    Logger.stats(this.stats.suite, this.stats.all, this.rules.length, execTime);
   };
 
   verify = () => {
@@ -48,8 +48,10 @@ export class RulesModule {
     console.info('\n');
 
     this.rules.forEach((rule) => {
-      const state = new RuleFactory(rule, this.rootDir).verify();
-      this.stats[state] += 1;
+      const result = new RuleFactory(rule, this.rootDir).verify();
+      this.stats.suite[result.state] += 1;
+      this.stats.all[VerifyStateEnum.failed] += result.failed;
+      this.stats.all[VerifyStateEnum.passed] += result.passed;
     });
 
     this.showStats(startTime);

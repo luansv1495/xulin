@@ -9,7 +9,7 @@ import {
   NameIsRequiredValidation,
   SkipIsNotABooleanValidation
 } from '../validation';
-import { RuleModel, VerifyStateEnum } from './rule.model';
+import { RuleModel, VerifyRuleState, VerifyStateEnum } from './rule.model';
 
 export class BaseRule {
   rule: RuleModel;
@@ -31,15 +31,23 @@ export class BaseRule {
   }
 
   /* istanbul ignore next */
-  customVerify(rootDir: string): VerifyStateEnum {
+  customVerify(rootDir: string): VerifyRuleState {
     /* istanbul ignore next */
-    return VerifyStateEnum.skipped;
+    return {
+      state: VerifyStateEnum.skipped,
+      passed: 0,
+      failed: 0
+    };
   }
 
-  verify(rootDir: string): VerifyStateEnum {
+  verify(rootDir: string): VerifyRuleState {
     if (this.rule.skip === true) {
       Logger.handler(VerifyStateEnum.skipped, this.verifyMessage);
-      return VerifyStateEnum.skipped;
+      return {
+        state: VerifyStateEnum.skipped,
+        passed: 0,
+        failed: 0
+      };
     }
     return this.customVerify(rootDir);
   }
