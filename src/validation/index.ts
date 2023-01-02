@@ -10,3 +10,4 @@ export * from './rules/is-valid-folder.validation';
 export * from './rules/is-valid-filename-pattern.validation';
 export * from './rules/is-valid-folder-name.validation';
 export * from './rules/is-valid-quantity.validation';
+export * from './rules/is-valid-max-min.validation';

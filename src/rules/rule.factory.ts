@@ -4,6 +4,10 @@ import {
   FilenamePatternInFolderRule
 } from './filename-pattern-in-folder';
 import {
+  FilenameSizeInFolderProps,
+  FilenameSizeInFolderRule
+} from './filename-size';
+import {
   FolderNameInFolderProps,
   FolderNameInFolderRule
 } from './folder-name-in-folder';
@@ -68,6 +72,14 @@ export class RuleFactory {
           Object.values(MaxFoldersInFolderProps) as string[]
         ).concat(Object.values(RuleProps) as string[])
       });
+    } else if (this.rule.name === RuleNameEnum.filenameSizeInFolder) {
+      new FilenameSizeInFolderRule(this.rule).validate({
+        rule: this.rule,
+        rootDir: this.rootDir,
+        expectedFields: (
+          Object.values(FilenameSizeInFolderProps) as string[]
+        ).concat(Object.values(RuleProps) as string[])
+      });
     }
   };
 
@@ -86,6 +98,8 @@ export class RuleFactory {
       state = new MaxFilesInFolderRule(this.rule).verify(this.rootDir);
     } else if (this.rule.name === RuleNameEnum.maxFoldersInFolder) {
       state = new MaxFoldersInFolderRule(this.rule).verify(this.rootDir);
+    } else if (this.rule.name === RuleNameEnum.filenameSizeInFolder) {
+      state = new FilenameSizeInFolderRule(this.rule).verify(this.rootDir);
     }
 
     return state;

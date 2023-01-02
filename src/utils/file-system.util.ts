@@ -1,6 +1,6 @@
 import fg from 'fast-glob';
 import fs from 'fs';
-import { join } from 'path';
+import path, { join } from 'path';
 
 export const FileSystem = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,5 +73,12 @@ export const FileSystem = {
     const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
 
     return items.filter((item) => item.isDirectory()).map((item) => item.name);
+  },
+
+  getFilename: (completePath: string): string => {
+    const basePath = path.parse(completePath).base;
+    const basePathArray = basePath.split('.');
+    basePathArray.pop();
+    return basePathArray.join('.');
   }
 };
