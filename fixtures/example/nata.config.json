@@ -27,7 +27,7 @@
     {
       "name": "max-folders-in-folder",
       "skip": false,
-      "quantity": 0,
+      "quantity": 1,
       "folder": "source/services"
     }
   ]

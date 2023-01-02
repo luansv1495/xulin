@@ -1,5 +1,11 @@
 import { BaseError, ProjectPathNotFoundError } from './error';
-import { ErrorMessage, FileSystem, InfoMessage, Logger } from './utils';
+import {
+  ErrorMessage,
+  FileSystem,
+  InfoMessage,
+  Logger,
+  ProcessUtil
+} from './utils';
 import { RulesModule } from './rules';
 import { ConfigModule } from './config';
 
@@ -10,7 +16,7 @@ export const main = () => {
     const rootDir = process.argv[2];
 
     if (!FileSystem.exists(rootDir)) {
-      new ProjectPathNotFoundError(rootDir).showError();
+      throw new ProjectPathNotFoundError(rootDir);
     } else {
       const rulesModule = new RulesModule(rootDir);
       const configModule = new ConfigModule(rootDir, rulesModule);
@@ -31,6 +37,9 @@ export const main = () => {
     } else {
       (error as BaseError).showError();
     }
+    console.log(ProcessUtil.exit);
+
+    ProcessUtil.exit();
   }
 };
 

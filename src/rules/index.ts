@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { RuleIsNotArrayError } from '../error';
-import { InfoMessage, Logger } from '../utils';
+import { InfoMessage, Logger, ProcessUtil } from '../utils';
 import { RuleFactory } from './rule.factory';
 import { VerifyStateEnum, RuleModel } from './rule.model';
 
@@ -55,5 +55,9 @@ export class RulesModule {
     });
 
     this.showStats(startTime);
+
+    if (this.stats.suite.failed >= 1) {
+      ProcessUtil.exit();
+    }
   };
 }

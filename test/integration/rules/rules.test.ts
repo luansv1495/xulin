@@ -3,6 +3,8 @@ import { main } from '../../../src/index';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
 import { FileSystem } from '../../../src/utils';
 
+jest.mock('../../../src/utils/process.util');
+
 describe('Rules tests', () => {
   beforeAll(() => {
     jest.spyOn(process.stdout, 'write').mockImplementationOnce(() => false);
