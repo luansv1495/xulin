@@ -1,7 +1,7 @@
 import { bgRed, bgGreen, bgYellow, red, grey, bold } from 'kleur';
-import fs from 'fs';
 import { main } from '../../../src';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
+import { FileSystem } from '../../../src/utils';
 
 describe('Folder name in folder tests', () => {
   beforeAll(() => {
@@ -19,9 +19,7 @@ describe('Folder name in folder tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -40,9 +38,7 @@ describe('Folder name in folder tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -62,9 +58,7 @@ describe('Folder name in folder tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -85,9 +79,7 @@ describe('Folder name in folder tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -108,9 +100,7 @@ describe('Folder name in folder tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -131,14 +121,12 @@ describe('Folder name in folder tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
-      3,
+      4,
       bold(bgGreen(' PASS ')) +
         ` Folder in ${grey(
           'source'
@@ -159,14 +147,12 @@ describe('Folder name in folder tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
-      3,
+      4,
       bold(bgRed(' FAIL ')) +
         ` Folder in ${grey(
           'source'
@@ -187,14 +173,12 @@ describe('Folder name in folder tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
-      3,
+      4,
       bold(bgYellow(' SKIP ')) +
         ` Folder in ${grey(
           'source'
@@ -215,14 +199,12 @@ describe('Folder name in folder tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
-      4,
+      5,
       '      ' +
         red('ERROR: ') +
         `RuleError ${grey('folder-name-in-folder')}: Folder ${grey(

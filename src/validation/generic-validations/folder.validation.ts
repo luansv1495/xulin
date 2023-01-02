@@ -1,5 +1,5 @@
-import fs from 'fs';
 import path from 'path';
+import { FileSystem } from '../../utils';
 
 export const validateFolder = (
   rootDir: string,
@@ -11,7 +11,7 @@ export const validateFolder = (
     return `"${folder}" is invalid.`;
   } else if (folder.split('.').length != 1) {
     return `"${folder}" is not a folder.`;
-  } else if (!fs.existsSync(path.join(rootDir, folder))) {
+  } else if (!FileSystem.exists(path.join(rootDir, folder))) {
     return `"${folder}" not found.`;
   }
   return null;

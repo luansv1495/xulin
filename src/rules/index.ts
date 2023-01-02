@@ -45,7 +45,7 @@ export class RulesModule {
 
     const startTime = new Date();
 
-    console.info('\n');
+    process.stdout.write('\n');
 
     this.rules.forEach((rule) => {
       const result = new RuleFactory(rule, this.rootDir).verify();

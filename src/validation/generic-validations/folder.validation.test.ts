@@ -1,7 +1,5 @@
-import fs from 'fs';
+import { FileSystem } from '../../utils';
 import { validateFolder } from './folder.validation';
-
-jest.mock('fs');
 
 describe('Folder validation tests', () => {
   test('should display error when folder is not a string', () => {
@@ -20,13 +18,13 @@ describe('Folder validation tests', () => {
   });
 
   test('should display error when folder is not found', () => {
-    jest.spyOn(fs, 'existsSync').mockReturnValueOnce(false);
+    jest.spyOn(FileSystem, 'exists').mockReturnValueOnce(false);
     const result = validateFolder('./fake-folder', 'fake');
     expect(result).toBe('"fake" not found.');
   });
 
   test('should return null when folder is valid', () => {
-    jest.spyOn(fs, 'existsSync').mockReturnValueOnce(true);
+    jest.spyOn(FileSystem, 'exists').mockReturnValueOnce(true);
     const result = validateFolder('./fake-folder', 'fake');
     expect(result).toBeNull();
   });

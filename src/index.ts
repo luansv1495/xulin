@@ -1,6 +1,5 @@
-import fs from 'fs';
 import { BaseError, ProjectPathNotFoundError } from './error';
-import { ErrorMessage, InfoMessage, Logger } from './utils';
+import { ErrorMessage, FileSystem, InfoMessage, Logger } from './utils';
 import { RulesModule } from './rules';
 import { ConfigModule } from './config';
 
@@ -10,7 +9,7 @@ export const main = () => {
 
     const rootDir = process.argv[2];
 
-    if (!fs.existsSync(rootDir)) {
+    if (!FileSystem.exists(rootDir)) {
       new ProjectPathNotFoundError(rootDir).showError();
     } else {
       const rulesModule = new RulesModule(rootDir);

@@ -1,9 +1,8 @@
-import path from 'path';
-import fs from 'fs';
-
 import { ConfigModel, ConfigProps } from './config.model';
 import { ConfigFileIsEmptyError, UnexpectFieldInConfigError } from '../error';
 import { RulesModule } from '../rules';
+import { FileSystem } from '../utils';
+import { join } from 'path';
 
 export class ConfigModule {
   constructor(
@@ -12,9 +11,9 @@ export class ConfigModule {
   ) {}
 
   getConfigFile = (): ConfigModel | undefined => {
-    const buffer = fs.readFileSync(path.join(this.rootDir, 'nata.config.json'));
-
-    const jsonData = JSON.parse(buffer.toString());
+    const jsonData = FileSystem.getJsonFile(
+      join(this.rootDir, 'nata.config.json')
+    );
 
     this.validate(jsonData);
 

@@ -1,26 +1,39 @@
-import { readdirSync } from 'fs';
-import path from 'path';
 import fg from 'fast-glob';
+import fs from 'fs';
+import { join } from 'path';
 
 export const FileSystem = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getJsonFile: (path: string): any => {
+    const buffer = fs.readFileSync(path);
+
+    const jsonData = JSON.parse(buffer.toString());
+
+    return jsonData;
+  },
+
+  exists: (path: string): boolean => {
+    return fs.existsSync(path);
+  },
+
   getFilesInFolder: (
     rootDir: string,
     folder: string,
     files: string[]
   ): string[] => {
-    const completeFolderPath = path.join(rootDir, folder);
+    const completeFolderPath = join(rootDir, folder);
 
-    const items = readdirSync(completeFolderPath, { withFileTypes: true });
+    const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
 
     items.forEach((item) => {
       if (item.isDirectory()) {
         files = FileSystem.getFilesInFolder(
           rootDir,
-          path.join(folder, item.name),
+          join(folder, item.name),
           files
         );
       } else {
-        files.push(path.join(completeFolderPath, item.name));
+        files.push(join(completeFolderPath, item.name));
       }
     });
 
@@ -35,7 +48,7 @@ export const FileSystem = {
     let validFiles: string[] = [];
 
     patterns.forEach((pattern) => {
-      const files = fg.sync(path.join(rootDir, folder) + '/**/' + pattern);
+      const files = fg.sync(join(rootDir, folder) + '/**/' + pattern);
       validFiles = validFiles.concat(files);
     });
 
@@ -43,9 +56,9 @@ export const FileSystem = {
   },
 
   getFoldersInFolder: (rootDir: string, folder: string): string[] => {
-    const completeFolderPath = path.join(rootDir, folder);
+    const completeFolderPath = join(rootDir, folder);
 
-    const items = readdirSync(completeFolderPath, { withFileTypes: true });
+    const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
 
     return items.filter((item) => item.isDirectory()).map((item) => item.name);
   }

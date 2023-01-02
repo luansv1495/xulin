@@ -1,7 +1,7 @@
 import { blue, red, yellow, green, bold } from 'kleur';
-import fs from 'fs';
 import { main } from '../../../src/index';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
+import { FileSystem } from '../../../src/utils';
 
 describe('Rules tests', () => {
   beforeAll(() => {
@@ -20,9 +20,7 @@ describe('Rules tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -43,14 +41,12 @@ describe('Rules tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
-      4,
+      5,
       `\n${bold('Check Suites:')} ${bold(red('0 failed'))}, ${bold(
         yellow('0 skipped')
       )}, ${bold(green('1 passed'))}, 1 total.`
@@ -68,14 +64,12 @@ describe('Rules tests', () => {
         }
       ]
     };
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify(fakeConfig)));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
-      5,
+      6,
       `\n${bold('Checks:')}       ${bold(red('0 failed'))}, ${bold(
         green('3 passed')
       )}, 3 total.`

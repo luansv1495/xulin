@@ -2,7 +2,7 @@ import { red } from 'kleur';
 import fs from 'fs';
 import { main } from '../../../src/index';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
-import { ErrorMessage } from '../../../src/utils';
+import { ErrorMessage, FileSystem } from '../../../src/utils';
 
 describe('Config tests', () => {
   beforeAll(() => {
@@ -36,9 +36,7 @@ describe('Config tests', () => {
   });
 
   test('should display error when config is empty', () => {
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify({})));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce({});
 
     main();
 
@@ -48,11 +46,7 @@ describe('Config tests', () => {
   });
 
   test('should display error when exists a unexpected field in config', () => {
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() =>
-        Buffer.from(JSON.stringify({ fakeKey: '' }))
-      );
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce({ fakeKey: '' });
 
     main();
 
@@ -62,9 +56,7 @@ describe('Config tests', () => {
   });
 
   test('should display error when field rules is not a array', () => {
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() => Buffer.from(JSON.stringify({ rules: '' })));
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce({ rules: '' });
 
     main();
 
@@ -74,11 +66,8 @@ describe('Config tests', () => {
   });
 
   test('should display error when field rule item is not a json object', () => {
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() =>
-        Buffer.from(JSON.stringify({ rules: ['test'] }))
-      );
+    const fakeConfig = { rules: ['test'] };
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -88,11 +77,8 @@ describe('Config tests', () => {
   });
 
   test('should display error when field rule item not contains name field', () => {
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() =>
-        Buffer.from(JSON.stringify({ rules: [{}] }))
-      );
+    const fakeConfig = { rules: [{}] };
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -102,11 +88,8 @@ describe('Config tests', () => {
   });
 
   test('should display error when field name in rule is not a string', () => {
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockImplementationOnce(() =>
-        Buffer.from(JSON.stringify({ rules: [{ name: 1 }] }))
-      );
+    const fakeConfig = { rules: [{ name: 1 }] };
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -116,11 +99,8 @@ describe('Config tests', () => {
   });
 
   test('should display error when field name in rule is not recognize', () => {
-    jest
-      .spyOn(fs, 'readFileSync')
-      .mockReturnValue(
-        Buffer.from(JSON.stringify({ rules: [{ name: 'fake' }] }))
-      );
+    const fakeConfig = { rules: [{ name: 'fake' }] };
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
@@ -130,13 +110,10 @@ describe('Config tests', () => {
   });
 
   test('should display error when field skip in rule is not a boolean', () => {
-    jest.spyOn(fs, 'readFileSync').mockReturnValue(
-      Buffer.from(
-        JSON.stringify({
-          rules: [{ name: RuleNameEnum.filenamePatternInFolder, skip: 'fake' }]
-        })
-      )
-    );
+    const fakeConfig = {
+      rules: [{ name: RuleNameEnum.filenamePatternInFolder, skip: 'fake' }]
+    };
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
