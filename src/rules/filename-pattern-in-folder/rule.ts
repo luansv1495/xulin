@@ -43,7 +43,7 @@ export class FilenamePatternInFolderRule extends BaseRule {
   };
 
   customVerify(rootDir: string): VerifyRuleState {
-    const filesInFolder = FileSystem.getFilesInFolder(
+    const filesInFolder = FileSystem.getDeepFilesInFolder(
       rootDir,
       this.rule.folder,
       []

@@ -16,7 +16,7 @@ export const FileSystem = {
     return fs.existsSync(path);
   },
 
-  getFilesInFolder: (
+  getDeepFilesInFolder: (
     rootDir: string,
     folder: string,
     files: string[]
@@ -27,7 +27,7 @@ export const FileSystem = {
 
     items.forEach((item) => {
       if (item.isDirectory()) {
-        files = FileSystem.getFilesInFolder(
+        files = FileSystem.getDeepFilesInFolder(
           rootDir,
           join(folder, item.name),
           files
@@ -36,6 +36,18 @@ export const FileSystem = {
         files.push(join(completeFolderPath, item.name));
       }
     });
+
+    return files;
+  },
+
+  getFilesInFolder: (rootDir: string, folder: string): string[] => {
+    const completeFolderPath = join(rootDir, folder);
+
+    const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
+
+    const files = items
+      .filter((item) => item.isFile())
+      .map((item) => join(completeFolderPath, item.name));
 
     return files;
   },

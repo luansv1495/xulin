@@ -98,3 +98,10 @@ export class FolderNameNotMatchInRuleError extends RuleError {
     super(`${grey(ruleName)}: Folder ${grey(folderName)} not match.`);
   }
 }
+
+export class QuantityIsInvalidInRuleError extends RuleError {
+  constructor(result: string, ruleName: string) {
+    /* istanbul ignore next */
+    super(`Field quantity with value ${result} In ${ruleName} rule.`);
+  }
+}

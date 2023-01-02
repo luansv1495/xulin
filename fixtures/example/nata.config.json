@@ -17,6 +17,12 @@
         "configs"
       ],
       "folder": "source"
+    },
+    {
+      "name": "max-files-in-folder",
+      "skip": false,
+      "quantity": "2s",
+      "folder": "source/services"
     }
   ]
 }
