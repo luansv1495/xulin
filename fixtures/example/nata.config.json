@@ -21,7 +21,13 @@
     {
       "name": "max-files-in-folder",
       "skip": false,
-      "quantity": "2s",
+      "quantity": 0,
+      "folder": "source"
+    },
+    {
+      "name": "max-folders-in-folder",
+      "skip": false,
+      "quantity": 0,
       "folder": "source/services"
     }
   ]

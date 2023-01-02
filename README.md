@@ -79,6 +79,16 @@ Exec time:    00:00:00.001
 }
 ```
 
+4. Check the maximum amount of folders in a directory:
+
+```json
+{
+  "name": "max-folders-in-folder",
+  "quantity": 2,
+  "folder": "source/services"
+}
+```
+
 To skip a rule use the skip field:
 
 ```json

@@ -12,6 +12,10 @@ import {
   MaxFilesInFolderRule
 } from './max-files-in-folder';
 import {
+  MaxFoldersInFolderProps,
+  MaxFoldersInFolderRule
+} from './max-folders-in-folder';
+import {
   VerifyStateEnum,
   RuleModel,
   RuleNameEnum,
@@ -56,6 +60,14 @@ export class RuleFactory {
           Object.values(MaxFilesInFolderProps) as string[]
         ).concat(Object.values(RuleProps) as string[])
       });
+    } else if (this.rule.name === RuleNameEnum.maxFoldersInFolder) {
+      new MaxFoldersInFolderRule(this.rule).validate({
+        rule: this.rule,
+        rootDir: this.rootDir,
+        expectedFields: (
+          Object.values(MaxFoldersInFolderProps) as string[]
+        ).concat(Object.values(RuleProps) as string[])
+      });
     }
   };
 
@@ -72,6 +84,8 @@ export class RuleFactory {
       state = new FolderNameInFolderRule(this.rule).verify(this.rootDir);
     } else if (this.rule.name === RuleNameEnum.maxFilesInFolder) {
       state = new MaxFilesInFolderRule(this.rule).verify(this.rootDir);
+    } else if (this.rule.name === RuleNameEnum.maxFoldersInFolder) {
+      state = new MaxFoldersInFolderRule(this.rule).verify(this.rootDir);
     }
 
     return state;
