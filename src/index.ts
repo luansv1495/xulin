@@ -37,8 +37,6 @@ export const main = () => {
     } else {
       (error as BaseError).showError();
     }
-    console.log(ProcessUtil.exit);
-
     ProcessUtil.exit();
   }
 };
