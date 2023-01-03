@@ -7,10 +7,9 @@
   "keywords": [
     "architectury",
     "test",
-    "automation",
-    "cli"
+    "automation"
   ],
-  "repository": "https://github.com/luansv1495/nata-cli",
+  "repository": "https://github.com/luansv1495/xulin",
   "files": [
     "bin",
     "lib",
