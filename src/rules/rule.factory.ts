@@ -23,7 +23,6 @@ import {
   VerifyStateEnum,
   RuleModel,
   RuleNameEnum,
-  RuleProps,
   VerifyRuleState
 } from './rule.model';
 
@@ -40,45 +39,38 @@ export class RuleFactory {
       expectedFields: Object.values(RuleNameEnum)
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { skip, ...rest } = this.rule;
+
     if (this.rule.name === RuleNameEnum.filenamePatternInFolder) {
       new FilenamePatternInFolderRule(this.rule).validate({
-        rule: this.rule,
+        rule: rest,
         rootDir: this.rootDir,
-        expectedFields: (
-          Object.values(FilenamePatternInFolderProps) as string[]
-        ).concat(Object.values(RuleProps) as string[])
+        expectedFields: Object.values(FilenamePatternInFolderProps) as string[]
       });
     } else if (this.rule.name === RuleNameEnum.folderNameInFolder) {
       new FolderNameInFolderRule(this.rule).validate({
-        rule: this.rule,
+        rule: rest,
         rootDir: this.rootDir,
-        expectedFields: (
-          Object.values(FolderNameInFolderProps) as string[]
-        ).concat(Object.values(RuleProps) as string[])
+        expectedFields: Object.values(FolderNameInFolderProps) as string[]
       });
     } else if (this.rule.name === RuleNameEnum.maxFilesInFolder) {
       new MaxFilesInFolderRule(this.rule).validate({
-        rule: this.rule,
+        rule: rest,
         rootDir: this.rootDir,
-        expectedFields: (
-          Object.values(MaxFilesInFolderProps) as string[]
-        ).concat(Object.values(RuleProps) as string[])
+        expectedFields: Object.values(MaxFilesInFolderProps) as string[]
       });
     } else if (this.rule.name === RuleNameEnum.maxFoldersInFolder) {
       new MaxFoldersInFolderRule(this.rule).validate({
-        rule: this.rule,
+        rule: rest,
         rootDir: this.rootDir,
-        expectedFields: (
-          Object.values(MaxFoldersInFolderProps) as string[]
-        ).concat(Object.values(RuleProps) as string[])
+        expectedFields: Object.values(MaxFoldersInFolderProps) as string[]
       });
     } else if (this.rule.name === RuleNameEnum.filenameSizeInFolder) {
       new FilenameSizeInFolderRule(this.rule).validate({
-        rule: this.rule,
+        rule: rest,
         rootDir: this.rootDir,
-        expectedFields: (
-          Object.values(FilenameSizeInFolderProps) as string[]
-        ).concat(Object.values(RuleProps) as string[])
+        expectedFields: Object.values(FilenameSizeInFolderProps) as string[]
       });
     }
   };
