@@ -6,7 +6,7 @@ describe('FileSystem tests', () => {
     jest
       .spyOn(fs, 'readFileSync')
       .mockReturnValueOnce(Buffer.from(JSON.stringify({})));
-    const result = FileSystem.getJsonFile('fixtures/example/nata.config.json');
+    const result = FileSystem.getJsonFile('fixtures/example/xulin.config.json');
     expect(result).toStrictEqual({});
   });
 });

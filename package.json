@@ -1,6 +1,6 @@
 {
-  "name": "nata-cli",
-  "version": "0.0.7",
+  "name": "xulin",
+  "version": "0.0.8-alpha.0",
   "description": "Architecture test automation",
   "author": "Luan Viana",
   "license": "MIT",
@@ -20,12 +20,12 @@
   ],
   "main": "./lib/index.js",
   "bin": {
-    "nata-cli": "bin/nata-cli"
+    "xulin": "bin/xulin"
   },
   "scripts": {
     "start": "npm run build && npm run global",
     "build": "npm run clean:some && tsc -p .",
-    "global": "npm i -g && cd fixtures/example && nata-cli .",
+    "global": "npm i -g && cd fixtures/example && xulin .",
     "clean:some": "rm -rf ./lib",
     "lint": "eslint .",
     "prepare": "husky install",

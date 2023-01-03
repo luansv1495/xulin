@@ -1,4 +1,4 @@
-# Nata-cli
+# Xulin
 
 Architecture test automation
 
@@ -13,10 +13,10 @@ Architecture test automation
 
 ## Getting Started
 
-Install Nata-cli using [`npm`](https://www.npmjs.com/package/nata-cli):
+Install Xulin using [`npm`](https://www.npmjs.com/package/nata-cli):
 
 ```bash
-npm install --save-dev nata-cli
+npm install --save-dev xulin
 ```
 
 Add the following section to your `package.json`:
@@ -24,12 +24,12 @@ Add the following section to your `package.json`:
 ```json
 {
   "scripts": {
-    "test:arch": "nata-cli ."
+    "test:arch": "xulin ."
   }
 }
 ```
 
-Before running you must create the configuration file `nata.config.json`:
+Before running you must create the configuration file `xulin.config.json`:
 
 ```json
 {
@@ -37,7 +37,7 @@ Before running you must create the configuration file `nata.config.json`:
 }
 ```
 
-Finally, run `npm run test:arch` and Nata-cli will print this message:
+Finally, run `npm run test:arch` and Xulin will print this message:
 
 ```bash
 Check Suites: 0 failed, 0 skipped, 0 passed, 0 total.
@@ -113,4 +113,4 @@ To skip a rule use the skip field:
 
 ## License
 
-Nata-cli is [MIT licensed](./LICENSE).
+Xulin is [MIT licensed](./LICENSE).

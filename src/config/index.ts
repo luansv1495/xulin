@@ -12,7 +12,7 @@ export class ConfigModule {
 
   getConfigFile = (): ConfigModel | undefined => {
     const jsonData = FileSystem.getJsonFile(
-      join(this.rootDir, 'nata.config.json')
+      join(this.rootDir, 'xulin.config.json')
     );
 
     this.validate(jsonData);
