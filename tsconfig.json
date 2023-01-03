@@ -19,6 +19,7 @@
     "node_modules",
     "lib",
     "fixtures",
-    "**/*.test.ts"
+    "**/*.test.ts",
+    "test/utils/**/*.ts"
   ]
 }

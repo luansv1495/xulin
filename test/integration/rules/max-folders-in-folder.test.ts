@@ -2,85 +2,62 @@ import { bgRed, bgGreen, bgYellow, red, grey, bold } from 'kleur';
 import { main } from '../../../src';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
 import { FileSystem } from '../../../src/utils';
+import { ExpectUtil, ConfigBuild, RuleBuild } from '../../utils';
 
+const RULE_NAME = RuleNameEnum.maxFoldersInFolder;
 jest.mock('../../../src/utils/process.util');
 
 describe('Max folders in folder tests', () => {
+  let config: ConfigBuild;
+  let rule: RuleBuild;
+
+  beforeEach(() => {
+    config = new ConfigBuild();
+    rule = new RuleBuild(RULE_NAME);
+  });
+
   beforeAll(() => {
     jest.spyOn(process.stdout, 'write').mockImplementationOnce(() => false);
     process.argv = ['node', 'ata', './fixtures/example'];
   });
 
   test('should display error when exists a unexpect field', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.maxFoldersInFolder,
-          skip: false,
-          fakeField: ''
-        }
-      ]
-    };
+    const fakeConfig = config.withRule(rule.withFakeField().build()).build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Unexpected field "fakeField". In max-folders-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.unexpectedField(RULE_NAME, 'fakeField');
   });
 
   test('should display error when folder field not exists', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.maxFoldersInFolder,
-          skip: false
-        }
-      ]
-    };
+    const fakeConfig = config.withRule(rule.build()).build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field "folder" is required. In max-folders-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.requiredField(RULE_NAME, 'folder');
   });
 
   test('should display error when quantity field not exists', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.maxFoldersInFolder,
-          skip: false,
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(rule.withFolder('source/services').build())
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field "quantity" is required. In max-folders-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.requiredField(RULE_NAME, 'quantity');
   });
 
   test('should display error when folder field is invalid', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.maxFoldersInFolder,
-          skip: false,
-          quantity: 1,
-          folder: true
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(rule.withFolder(true).withQuantity(1).build())
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -92,16 +69,10 @@ describe('Max folders in folder tests', () => {
   });
 
   test('should display error when quantity field is invalid', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.maxFoldersInFolder,
-          skip: false,
-          quantity: '1',
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(rule.withFolder('source/services').withQuantity('1').build())
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -113,16 +84,10 @@ describe('Max folders in folder tests', () => {
   });
 
   test('should display rule passed status when the verification passed', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.maxFoldersInFolder,
-          skip: false,
-          quantity: 2,
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(rule.withFolder('source/services').withQuantity(2).build())
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -137,16 +102,10 @@ describe('Max folders in folder tests', () => {
   });
 
   test('should display rule fail status when the verification fail', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.maxFoldersInFolder,
-          skip: false,
-          quantity: 0,
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(rule.withFolder('source/services').withQuantity(0).build())
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -161,16 +120,12 @@ describe('Max folders in folder tests', () => {
   });
 
   test('should display rule skip status when the verification skip', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.maxFoldersInFolder,
-          skip: true,
-          quantity: 2,
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(
+        rule.withFolder('source').withQuantity(2).withSkip(true).build()
+      )
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -178,9 +133,7 @@ describe('Max folders in folder tests', () => {
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
       bold(bgYellow(' SKIP ')) +
-        ` Folder ${grey('source/services')} should contain ${grey(
-          2
-        )} folders.\n`
+        ` Folder ${grey('source')} should contain ${grey(2)} folders.\n`
     );
   });
 });

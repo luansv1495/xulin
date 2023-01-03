@@ -2,85 +2,62 @@ import { bgRed, bgGreen, bgYellow, red, grey, bold } from 'kleur';
 import { main } from '../../../src';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
 import { FileSystem } from '../../../src/utils';
+import { ExpectUtil, ConfigBuild, RuleBuild } from '../../utils';
 
+const RULE_NAME = RuleNameEnum.filenamePatternInFolder;
 jest.mock('../../../src/utils/process.util');
 
 describe('Filename pattern in folder tests', () => {
+  let config: ConfigBuild;
+  let rule: RuleBuild;
+
+  beforeEach(() => {
+    config = new ConfigBuild();
+    rule = new RuleBuild(RULE_NAME);
+  });
+
   beforeAll(() => {
     jest.spyOn(process.stdout, 'write').mockImplementationOnce(() => false);
     process.argv = ['node', 'ata', './fixtures/example'];
   });
 
   test('should display error when exists a unexpect field', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: false,
-          fakeField: ''
-        }
-      ]
-    };
+    const fakeConfig = config.withRule(rule.withFakeField().build()).build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Unexpected field "fakeField". In filename-pattern-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.unexpectedField(RULE_NAME, 'fakeField');
   });
 
   test('should display error when folder field not exists', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: false
-        }
-      ]
-    };
+    const fakeConfig = config.withRule(rule.build()).build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field "folder" is required. In filename-pattern-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.requiredField(RULE_NAME, 'folder');
   });
 
   test('should display error when patterns field not exists', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: false,
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(rule.withFolder('sources/services').build())
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field "patterns" is required. In filename-pattern-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.requiredField(RULE_NAME, 'patterns');
   });
 
   test('should display error when folder field is invalid', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: false,
-          patterns: ['*.ts'],
-          folder: true
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(rule.withFolder(true).withPatterns(['*.ts']).build())
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -92,16 +69,12 @@ describe('Filename pattern in folder tests', () => {
   });
 
   test('should display error when pattern field is invalid', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: false,
-          patterns: ['folder'],
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(
+        rule.withFolder('source/services').withPatterns(['folder']).build()
+      )
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -113,16 +86,12 @@ describe('Filename pattern in folder tests', () => {
   });
 
   test('should display rule passed status when the verification passed', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: false,
-          patterns: ['*.ts'],
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(
+        rule.withFolder('source/services').withPatterns(['*.ts']).build()
+      )
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -137,16 +106,12 @@ describe('Filename pattern in folder tests', () => {
   });
 
   test('should display rule fail status when the verification fail', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: false,
-          patterns: ['*.js'],
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(
+        rule.withFolder('source/services').withPatterns(['*.js']).build()
+      )
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -161,16 +126,12 @@ describe('Filename pattern in folder tests', () => {
   });
 
   test('should display rule skip status when the verification skip', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: true,
-          patterns: ['*.js'],
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(
+        rule.withFolder('source').withPatterns(['*.js']).withSkip(true).build()
+      )
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
@@ -178,23 +139,17 @@ describe('Filename pattern in folder tests', () => {
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
       bold(bgYellow(' SKIP ')) +
-        ` Files in ${grey('source/services')} should contains ${grey(
-          '*.js'
-        )}.\n`
+        ` Files in ${grey('source')} should contains ${grey('*.js')}.\n`
     );
   });
 
   test('should display fails description when the verification fail', () => {
-    const fakeConfig = {
-      rules: [
-        {
-          name: RuleNameEnum.filenamePatternInFolder,
-          skip: false,
-          patterns: ['*.js'],
-          folder: 'source/services'
-        }
-      ]
-    };
+    const fakeConfig = config
+      .withRule(
+        rule.withFolder('source/services').withPatterns(['*.js']).build()
+      )
+      .build();
+
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();

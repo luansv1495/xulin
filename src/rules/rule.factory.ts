@@ -6,7 +6,7 @@ import {
 import {
   FilenameSizeInFolderProps,
   FilenameSizeInFolderRule
-} from './filename-size';
+} from './filename-size-in-folder';
 import {
   FolderNameInFolderProps,
   FolderNameInFolderRule

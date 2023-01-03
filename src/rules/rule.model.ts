@@ -1,5 +1,5 @@
 import { FilenamePatternInFolderModel } from './filename-pattern-in-folder';
-import { FilenameSizeInFolderModel } from './filename-size';
+import { FilenameSizeInFolderModel } from './filename-size-in-folder';
 import { FolderNameInFolderModel } from './folder-name-in-folder';
 import { MaxFilesInFolderModel } from './max-files-in-folder';
 import { MaxFoldersInFolderModel } from './max-folders-in-folder';
