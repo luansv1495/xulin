@@ -21,7 +21,7 @@ describe('Config tests', () => {
       red('ERROR: ') +
         'ConfigError ' +
         ErrorMessage.configNotFound +
-        " 'fixtures/without-config/nata.config.json'\n"
+        " 'fixtures/without-config/xulin.config.json'\n"
     );
   });
 
