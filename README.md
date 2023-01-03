@@ -2,7 +2,7 @@
 
 Architecture test automation
 
-[![Continuous integration](https://github.com/luansv1495/nata-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/luansv1495/nata-cli/actions/workflows/ci.yml) [![Coverage Status](https://coveralls.io/repos/github/luansv1495/nata-cli/badge.svg?branch=main)](https://coveralls.io/github/luansv1495/nata-cli?branch=main)
+[![Continuous integration](https://github.com/luansv1495/xulin/actions/workflows/ci.yml/badge.svg)](https://github.com/luansv1495/xulin/actions/workflows/ci.yml) [![Coverage Status](https://coveralls.io/repos/github/luansv1495/xulin/badge.svg?branch=main)](https://coveralls.io/github/luansv1495/xulin?branch=main)
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@ Architecture test automation
 
 ## Getting Started
 
-Install Xulin using [`npm`](https://www.npmjs.com/package/nata-cli):
+Install Xulin using [`npm`](https://www.npmjs.com/package/xulin):
 
 ```bash
 npm install --save-dev xulin
