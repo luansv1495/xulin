@@ -5,15 +5,15 @@ import { FolderNameSizeInFolderModel } from './folder-name-size-in-folder';
 import { MaxFilesInFolderModel } from './max-files-in-folder';
 import { MaxFoldersInFolderModel } from './max-folders-in-folder';
 
-export type RuleModel = {
-  name: RuleNameEnum;
-  skip: boolean;
-} & FilenamePatternInFolderModel &
-  FolderNameInFolderModel &
-  MaxFilesInFolderModel &
-  MaxFoldersInFolderModel &
+export type RuleModel = FilenamePatternInFolderModel &
   FilenameSizeInFolderModel &
-  FolderNameSizeInFolderModel;
+  FolderNameInFolderModel &
+  FolderNameSizeInFolderModel &
+  MaxFilesInFolderModel &
+  MaxFoldersInFolderModel & {
+    name: RuleNameEnum;
+    skip: boolean;
+  };
 
 export enum RuleProps {
   name = 'name',

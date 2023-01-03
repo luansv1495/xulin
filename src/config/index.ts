@@ -5,10 +5,7 @@ import { FileSystem } from '../utils';
 import { join } from 'path';
 
 export class ConfigModule {
-  constructor(
-    private readonly rootDir: string,
-    private readonly rulesModule: RulesModule
-  ) {}
+  constructor(private rootDir: string, private rulesModule: RulesModule) {}
 
   getConfigFile = (): ConfigModel | undefined => {
     const jsonData = FileSystem.getJsonFile(
@@ -20,7 +17,7 @@ export class ConfigModule {
     return jsonData;
   };
 
-  validate = (jsonData: object) => {
+  validate = (jsonData: object): void => {
     const receivedKeys = Object.keys(jsonData);
     const expectedKeys = Object.values(ConfigProps);
 
@@ -28,7 +25,7 @@ export class ConfigModule {
       throw new ConfigFileIsEmptyError();
     }
 
-    receivedKeys.forEach((receivedKey) => {
+    receivedKeys.forEach((receivedKey: string) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (!expectedKeys.includes(receivedKey as any)) {
         throw new UnexpectFieldInConfigError(receivedKey);

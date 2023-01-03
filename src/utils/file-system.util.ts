@@ -25,7 +25,7 @@ export const FileSystem = {
 
     const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
 
-    items.forEach((item) => {
+    items.forEach((item: fs.Dirent) => {
       if (item.isDirectory()) {
         files = FileSystem.getDeepFilesInFolder(
           rootDir,
@@ -46,8 +46,8 @@ export const FileSystem = {
     const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
 
     const files = items
-      .filter((item) => item.isFile())
-      .map((item) => join(completeFolderPath, item.name));
+      .filter((item: fs.Dirent) => item.isFile())
+      .map((item: fs.Dirent) => join(completeFolderPath, item.name));
 
     return files;
   },
@@ -59,7 +59,7 @@ export const FileSystem = {
   ): string[] => {
     let validFiles: string[] = [];
 
-    patterns.forEach((pattern) => {
+    patterns.forEach((pattern: string) => {
       const files = fg.sync(join(rootDir, folder) + '/**/' + pattern);
       validFiles = validFiles.concat(files);
     });
@@ -72,7 +72,9 @@ export const FileSystem = {
 
     const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
 
-    return items.filter((item) => item.isDirectory()).map((item) => item.name);
+    return items
+      .filter((item: fs.Dirent) => item.isDirectory())
+      .map((item: fs.Dirent) => item.name);
   },
 
   getFilename: (completePath: string): string => {
@@ -91,7 +93,7 @@ export const FileSystem = {
 
     const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
 
-    items.forEach((item) => {
+    items.forEach((item: fs.Dirent) => {
       if (item.isDirectory()) {
         folders.push(join(completeFolderPath, item.name));
         FileSystem.getDeepFoldersInFolder(

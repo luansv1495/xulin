@@ -12,17 +12,22 @@ import moment from 'moment';
 import { VerifyStateEnum } from '../rules/rule.model';
 
 export const Logger = {
-  error: (errorName: string, message: string, nivel = 0) => {
+  error: (errorName: string, message: string, nivel?: number): void => {
     process.stdout.write(
-      ' '.repeat(nivel * 6) + red('ERROR: ') + errorName + ' ' + message + '\n'
+      ' '.repeat((nivel ?? 0) * 6) +
+        red('ERROR: ') +
+        errorName +
+        ' ' +
+        message +
+        '\n'
     );
   },
 
-  info: (message: string) => {
+  info: (message: string): void => {
     process.stdout.write(blue('INFO: ') + message + '\n');
   },
 
-  handler: (state: VerifyStateEnum, message: string) => {
+  handler: (state: VerifyStateEnum, message: string): void => {
     if (state === VerifyStateEnum.failed) {
       process.stdout.write(bold(bgRed(' FAIL ')) + ' ' + message + '\n');
     } else if (state === VerifyStateEnum.passed) {
@@ -37,7 +42,7 @@ export const Logger = {
     all: { failed: number; passed: number },
     total: number,
     execTime: number
-  ) => {
+  ): void => {
     const suiteFailures = bold(red(suite.failed + ' failed'));
     const suiteSkippeds = bold(yellow(suite.skipped + ' skipped'));
     const suitePasseds = bold(green(suite.passed + ' passed'));

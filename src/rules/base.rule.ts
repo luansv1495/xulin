@@ -27,7 +27,9 @@ export class BaseRule {
   }
 
   validate(props: BaseValidationProps): void {
-    this.validations.forEach((validation) => validation.validate(props));
+    this.validations.forEach((validation: BaseValidation) =>
+      validation.validate(props)
+    );
   }
 
   /* istanbul ignore next */

@@ -31,7 +31,7 @@ export class FolderNameSizeInFolderRule extends BaseRule {
   }
 
   getValidFolders = (foldersInFolder: string[]): string[] => {
-    const validFolders = foldersInFolder.filter((folder) => {
+    const validFolders = foldersInFolder.filter((folder: string) => {
       const length = FileSystem.getFolderName(folder).length;
       return length >= this.rule.min && length <= this.rule.max;
     });
@@ -44,7 +44,7 @@ export class FolderNameSizeInFolderRule extends BaseRule {
     validFolders: string[]
   ): string[] => {
     const invalidFolders = foldersInFolder.filter(
-      (folder) => !validFolders.includes(folder)
+      (folder: string) => !validFolders.includes(folder)
     );
 
     return invalidFolders;
@@ -67,7 +67,7 @@ export class FolderNameSizeInFolderRule extends BaseRule {
     if (invalidFolders.length != 0) {
       Logger.handler(VerifyStateEnum.failed, this.verifyMessage);
 
-      invalidFolders.forEach((invalidFolder) => {
+      invalidFolders.forEach((invalidFolder: string) => {
         new FolderNameSizeInRuleError(invalidFolder, this.rule.name).showError(
           1
         );

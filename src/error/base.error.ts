@@ -6,5 +6,6 @@ export class BaseError extends Error {
     this.name = name;
   }
 
-  showError = (nivel = 0) => Logger.error(this.name, this.message, nivel);
+  showError = (nivel?: number): void =>
+    Logger.error(this.name, this.message, nivel ?? 0);
 }

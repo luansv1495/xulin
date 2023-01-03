@@ -18,9 +18,9 @@ export class RulesModule {
     }
   };
 
-  constructor(private readonly rootDir: string) {}
+  constructor(private rootDir: string) {}
 
-  validate = (rules: unknown) => {
+  validate = (rules: unknown): void => {
     if (Object.prototype.toString.call(rules) != '[object Array]') {
       throw new RuleIsNotArrayError();
     }
@@ -32,7 +32,7 @@ export class RulesModule {
     this.rules = rules as RuleModel[];
   };
 
-  showStats = (startTime: Date) => {
+  showStats = (startTime: Date): void => {
     const endTime = new Date();
 
     const execTime = moment(endTime).diff(startTime);
@@ -40,14 +40,14 @@ export class RulesModule {
     Logger.stats(this.stats.suite, this.stats.all, this.rules.length, execTime);
   };
 
-  verify = () => {
+  verify = (): void => {
     Logger.info(InfoMessage.execRules);
 
     const startTime = new Date();
 
     process.stdout.write('\n');
 
-    this.rules.forEach((rule) => {
+    this.rules.forEach((rule: RuleModel) => {
       const result = new RuleFactory(rule, this.rootDir).verify();
       this.stats.suite[result.state] += 1;
       this.stats.all[VerifyStateEnum.failed] += result.failed;

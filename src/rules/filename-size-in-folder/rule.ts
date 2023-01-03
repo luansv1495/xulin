@@ -31,7 +31,7 @@ export class FilenameSizeInFolderRule extends BaseRule {
   }
 
   getValidFiles = (filesInFolder: string[]): string[] => {
-    const validFiles = filesInFolder.filter((file) => {
+    const validFiles = filesInFolder.filter((file: string) => {
       const length = FileSystem.getFilename(file).length;
       return length >= this.rule.min && length <= this.rule.max;
     });
@@ -44,7 +44,7 @@ export class FilenameSizeInFolderRule extends BaseRule {
     validFiles: string[]
   ): string[] => {
     const invalidFiles = filesInFolder.filter(
-      (file) => !validFiles.includes(file)
+      (file: string) => !validFiles.includes(file)
     );
 
     return invalidFiles;
@@ -64,7 +64,7 @@ export class FilenameSizeInFolderRule extends BaseRule {
     if (invalidFiles.length != 0) {
       Logger.handler(VerifyStateEnum.failed, this.verifyMessage);
 
-      invalidFiles.forEach((invalidFile) => {
+      invalidFiles.forEach((invalidFile: string) => {
         new FilenameSizeInRuleError(invalidFile, this.rule.name).showError(1);
       });
 

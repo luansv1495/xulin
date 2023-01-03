@@ -31,12 +31,9 @@ import {
 } from './rule.model';
 
 export class RuleFactory {
-  constructor(
-    private readonly rule: RuleModel,
-    private readonly rootDir: string
-  ) {}
+  constructor(private rule: RuleModel, private rootDir: string) {}
 
-  validate = () => {
+  validate = (): void => {
     new BaseRule(this.rule).validate({
       rule: this.rule,
       rootDir: this.rootDir,

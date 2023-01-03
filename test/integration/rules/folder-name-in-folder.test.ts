@@ -28,7 +28,7 @@ describe('Folder name in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.unexpectedField(RULE_NAME, 'fakeField');
+    ExpectUtil.ruleError.unexpectedField(RULE_NAME, 'fakeField');
   });
 
   test('should display error when folder field not exists', () => {
@@ -38,7 +38,7 @@ describe('Folder name in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'folder');
+    ExpectUtil.ruleError.requiredField(RULE_NAME, 'folder');
   });
 
   test('should display error when names field not exists', () => {
@@ -50,7 +50,7 @@ describe('Folder name in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'names');
+    ExpectUtil.ruleError.requiredField(RULE_NAME, 'names');
   });
 
   test('should display error when folder field is invalid', () => {
@@ -62,7 +62,7 @@ describe('Folder name in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.invalidStringField(RULE_NAME, 'folder', 'true');
+    ExpectUtil.ruleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
   test('should display error when names field is invalid', () => {
@@ -76,7 +76,7 @@ describe('Folder name in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.invalidFolderField(RULE_NAME, 'names', 'file.ts');
+    ExpectUtil.ruleError.invalidFolderField(RULE_NAME, 'names', 'file.ts');
   });
 
   test('should display rule passed status when the verification passed', () => {

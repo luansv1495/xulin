@@ -28,7 +28,7 @@ describe('Max folders in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.unexpectedField(RULE_NAME, 'fakeField');
+    ExpectUtil.ruleError.unexpectedField(RULE_NAME, 'fakeField');
   });
 
   test('should display error when folder field not exists', () => {
@@ -38,7 +38,7 @@ describe('Max folders in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'folder');
+    ExpectUtil.ruleError.requiredField(RULE_NAME, 'folder');
   });
 
   test('should display error when quantity field not exists', () => {
@@ -50,7 +50,7 @@ describe('Max folders in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'quantity');
+    ExpectUtil.ruleError.requiredField(RULE_NAME, 'quantity');
   });
 
   test('should display error when folder field is invalid', () => {
@@ -62,7 +62,7 @@ describe('Max folders in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.invalidStringField(RULE_NAME, 'folder', 'true');
+    ExpectUtil.ruleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
   test('should display error when quantity field is invalid', () => {
@@ -74,7 +74,7 @@ describe('Max folders in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.invalidNumberField(RULE_NAME, 'quantity', '1');
+    ExpectUtil.ruleError.invalidNumberField(RULE_NAME, 'quantity', '1');
   });
 
   test('should display rule passed status when the verification passed', () => {

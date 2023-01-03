@@ -30,14 +30,14 @@ export class FolderNameInFolderRule extends BaseRule {
 
   getInvalidFolderInFolder = (foldersInFolder: string[]): string[] => {
     const invalidFolders = foldersInFolder.filter(
-      (folder) => !this.rule.names.includes(folder)
+      (folder: string) => !this.rule.names.includes(folder)
     );
 
     return invalidFolders;
   };
 
   getValidFolderInFolder = (foldersInFolder: string[]): string[] => {
-    const validFolders = foldersInFolder.filter((folder) =>
+    const validFolders = foldersInFolder.filter((folder: string) =>
       this.rule.names.includes(folder)
     );
 
@@ -57,7 +57,7 @@ export class FolderNameInFolderRule extends BaseRule {
     if (invalidFolders.length != 0) {
       Logger.handler(VerifyStateEnum.failed, this.verifyMessage);
 
-      invalidFolders.forEach((folder) => {
+      invalidFolders.forEach((folder: string) => {
         new FolderNameNotMatchInRuleError(folder, this.rule.name).showError(1);
       });
 

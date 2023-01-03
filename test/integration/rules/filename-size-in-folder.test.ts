@@ -28,7 +28,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.unexpectedField(RULE_NAME, 'fakeField');
+    ExpectUtil.ruleError.unexpectedField(RULE_NAME, 'fakeField');
   });
 
   test('should display error when folder field not exists', () => {
@@ -38,7 +38,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'folder');
+    ExpectUtil.ruleError.requiredField(RULE_NAME, 'folder');
   });
 
   test('should display error when max field not exists', () => {
@@ -50,7 +50,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'max');
+    ExpectUtil.ruleError.requiredField(RULE_NAME, 'max');
   });
 
   test('should display error when min field not exists', () => {
@@ -62,7 +62,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'min');
+    ExpectUtil.ruleError.requiredField(RULE_NAME, 'min');
   });
 
   test('should display error when folder field is invalid', () => {
@@ -74,7 +74,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.invalidStringField(RULE_NAME, 'folder', 'true');
+    ExpectUtil.ruleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
   test('should display error when max field is invalid', () => {
@@ -88,7 +88,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.invalidNumberField(RULE_NAME, 'max', '2');
+    ExpectUtil.ruleError.invalidNumberField(RULE_NAME, 'max', '2');
   });
 
   test('should display error when min and max field is invalid', () => {
@@ -102,7 +102,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.invalidMaxMinField(RULE_NAME, '2');
+    ExpectUtil.ruleError.invalidMaxMinField(RULE_NAME, '2');
   });
 
   test('should display error when min field is invalid', () => {
@@ -116,7 +116,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.invalidNumberField(RULE_NAME, 'min', '2');
+    ExpectUtil.ruleError.invalidNumberField(RULE_NAME, 'min', '2');
   });
 
   test('should display rule passed status when the verification passed', () => {
