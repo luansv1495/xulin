@@ -62,10 +62,7 @@ describe('Folder name in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field folder with value "true" is not a string. In folder-name-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
   test('should display error when names field is invalid', () => {
@@ -79,10 +76,7 @@ describe('Folder name in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Folder name with value "file.ts" is not a folder. In folder-name-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.invalidFolderField(RULE_NAME, 'names', 'file.ts');
   });
 
   test('should display rule passed status when the verification passed', () => {

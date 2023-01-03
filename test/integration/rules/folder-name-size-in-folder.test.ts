@@ -4,10 +4,10 @@ import { RuleNameEnum } from '../../../src/rules/rule.model';
 import { FileSystem } from '../../../src/utils';
 import { ExpectUtil, ConfigBuild, RuleBuild } from '../../utils';
 
-const RULE_NAME = RuleNameEnum.filenamePatternInFolder;
+const RULE_NAME = RuleNameEnum.folderNameSizeInFolder;
 jest.mock('../../../src/utils/process.util');
 
-describe('Filename pattern in folder tests', () => {
+describe('Folder name size in folder tests', () => {
   let config: ConfigBuild;
   let rule: RuleBuild;
 
@@ -41,21 +41,33 @@ describe('Filename pattern in folder tests', () => {
     ExpectUtil.RuleError.requiredField(RULE_NAME, 'folder');
   });
 
-  test('should display error when patterns field not exists', () => {
+  test('should display error when max field not exists', () => {
     const fakeConfig = config
-      .withRule(rule.withFolder('sources/services').build())
+      .withRule(rule.withFolder('source/services').build())
       .build();
 
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'patterns');
+    ExpectUtil.RuleError.requiredField(RULE_NAME, 'max');
+  });
+
+  test('should display error when min field not exists', () => {
+    const fakeConfig = config
+      .withRule(rule.withFolder('source/services').withMax(1).build())
+      .build();
+
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
+
+    main();
+
+    ExpectUtil.RuleError.requiredField(RULE_NAME, 'min');
   });
 
   test('should display error when folder field is invalid', () => {
     const fakeConfig = config
-      .withRule(rule.withFolder(true).withPatterns(['*.ts']).build())
+      .withRule(rule.withFolder(true).withMax(2).withMin(1).build())
       .build();
 
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
@@ -65,10 +77,10 @@ describe('Filename pattern in folder tests', () => {
     ExpectUtil.RuleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
-  test('should display error when pattern field is invalid', () => {
+  test('should display error when max field is invalid', () => {
     const fakeConfig = config
       .withRule(
-        rule.withFolder('source/services').withPatterns(['folder']).build()
+        rule.withFolder('source/services').withMax('2').withMin(1).build()
       )
       .build();
 
@@ -76,13 +88,41 @@ describe('Filename pattern in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.invalidFileField(RULE_NAME, 'pattern', 'folder');
+    ExpectUtil.RuleError.invalidNumberField(RULE_NAME, 'max', '2');
+  });
+
+  test('should display error when min and max field is invalid', () => {
+    const fakeConfig = config
+      .withRule(
+        rule.withFolder('source/services').withMax(2).withMin(2).build()
+      )
+      .build();
+
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
+
+    main();
+
+    ExpectUtil.RuleError.invalidMaxMinField(RULE_NAME, '2');
+  });
+
+  test('should display error when min field is invalid', () => {
+    const fakeConfig = config
+      .withRule(
+        rule.withFolder('source/services').withMax(2).withMin('2').build()
+      )
+      .build();
+
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
+
+    main();
+
+    ExpectUtil.RuleError.invalidNumberField(RULE_NAME, 'min', '2');
   });
 
   test('should display rule passed status when the verification passed', () => {
     const fakeConfig = config
       .withRule(
-        rule.withFolder('source/services').withPatterns(['*.ts']).build()
+        rule.withFolder('source/services').withMax(16).withMin(3).build()
       )
       .build();
 
@@ -93,17 +133,17 @@ describe('Filename pattern in folder tests', () => {
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
       bold(bgGreen(' PASS ')) +
-        ` Files in ${grey('source/services')} should contains ${grey(
-          '*.ts'
-        )}.\n`
+        ` Folders names must contain a minimum of ${grey(
+          3
+        )} characters and a maximum of ${grey(16)} characters in ${grey(
+          'source/services'
+        )} folder.\n`
     );
   });
 
   test('should display rule fail status when the verification fail', () => {
     const fakeConfig = config
-      .withRule(
-        rule.withFolder('source/services').withPatterns(['*.js']).build()
-      )
+      .withRule(rule.withFolder('source').withMax(7).withMin(3).build())
       .build();
 
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
@@ -113,16 +153,18 @@ describe('Filename pattern in folder tests', () => {
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
       bold(bgRed(' FAIL ')) +
-        ` Files in ${grey('source/services')} should contains ${grey(
-          '*.js'
-        )}.\n`
+        ` Folders names must contain a minimum of ${grey(
+          3
+        )} characters and a maximum of ${grey(7)} characters in ${grey(
+          'source'
+        )} folder.\n`
     );
   });
 
   test('should display rule skip status when the verification skip', () => {
     const fakeConfig = config
       .withRule(
-        rule.withFolder('source').withPatterns(['*.js']).withSkip(true).build()
+        rule.withFolder('source').withMax(7).withMin(3).withSkip(true).build()
       )
       .build();
 
@@ -133,15 +175,17 @@ describe('Filename pattern in folder tests', () => {
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
       bold(bgYellow(' SKIP ')) +
-        ` Files in ${grey('source')} should contains ${grey('*.js')}.\n`
+        ` Folders names must contain a minimum of ${grey(
+          3
+        )} characters and a maximum of ${grey(7)} characters in ${grey(
+          'source'
+        )} folder.\n`
     );
   });
 
   test('should display fails description when the verification fail', () => {
     const fakeConfig = config
-      .withRule(
-        rule.withFolder('source/services').withPatterns(['*.js']).build()
-      )
+      .withRule(rule.withFolder('source').withMax(7).withMin(3).build())
       .build();
 
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
@@ -152,8 +196,8 @@ describe('Filename pattern in folder tests', () => {
       5,
       '      ' +
         red('ERROR: ') +
-        `RuleError ${grey('filename-pattern-in-folder')}: File ${grey(
-          'fixtures/example/source/services/api.service.test.ts'
+        `RuleError ${grey('folder-name-size-in-folder')}: Folder name ${grey(
+          'fixtures/example/source/services'
         )} not match.\n`
     );
   });

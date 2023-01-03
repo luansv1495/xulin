@@ -29,6 +29,12 @@
     {
       "name": "filename-size-in-folder",
       "min": 3,
+      "max": 16,
+      "folder": "source"
+    },
+    {
+      "name": "folder-name-size-in-folder",
+      "min": 3,
       "max": 10,
       "folder": "source"
     }

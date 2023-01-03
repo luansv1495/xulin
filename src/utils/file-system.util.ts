@@ -80,5 +80,33 @@ export const FileSystem = {
     const basePathArray = basePath.split('.');
     basePathArray.pop();
     return basePathArray.join('.');
+  },
+
+  getDeepFoldersInFolder: (
+    rootDir: string,
+    folder: string,
+    folders: string[]
+  ): string[] => {
+    const completeFolderPath = join(rootDir, folder);
+
+    const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
+
+    items.forEach((item) => {
+      if (item.isDirectory()) {
+        folders.push(join(completeFolderPath, item.name));
+        FileSystem.getDeepFoldersInFolder(
+          rootDir,
+          join(folder, item.name),
+          folders
+        );
+      }
+    });
+
+    return folders;
+  },
+
+  getFolderName: (completePath: string): string => {
+    const basePath = path.parse(completePath).base;
+    return basePath;
   }
 };

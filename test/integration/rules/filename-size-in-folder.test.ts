@@ -74,10 +74,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field folder with value "true" is not a string. In filename-size-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
   test('should display error when max field is invalid', () => {
@@ -91,10 +88,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field max with value "2" is not a number. In filename-size-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.invalidNumberField(RULE_NAME, 'max', '2');
   });
 
   test('should display error when min and max field is invalid', () => {
@@ -108,10 +102,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field min with value "2" is greater than or equal to the max value. In filename-size-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.invalidMaxMinField(RULE_NAME, '2');
   });
 
   test('should display error when min field is invalid', () => {
@@ -125,10 +116,7 @@ describe('Filename size in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field min with value "2" is not a number. In filename-size-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.invalidNumberField(RULE_NAME, 'min', '2');
   });
 
   test('should display rule passed status when the verification passed', () => {
@@ -212,7 +200,7 @@ describe('Filename size in folder tests', () => {
       5,
       '      ' +
         red('ERROR: ') +
-        `RuleError ${grey('filename-size-in-folder')}: File ${grey(
+        `RuleError ${grey('filename-size-in-folder')}: Filename ${grey(
           'fixtures/example/source/services/api.service.test.ts'
         )} not match.\n`
     );

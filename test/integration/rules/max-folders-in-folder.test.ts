@@ -1,4 +1,4 @@
-import { bgRed, bgGreen, bgYellow, red, grey, bold } from 'kleur';
+import { bgRed, bgGreen, bgYellow, grey, bold } from 'kleur';
 import { main } from '../../../src';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
 import { FileSystem } from '../../../src/utils';
@@ -62,10 +62,7 @@ describe('Max folders in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field folder with value "true" is not a string. In max-folders-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
   test('should display error when quantity field is invalid', () => {
@@ -77,10 +74,7 @@ describe('Max folders in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field quantity with value "1" is not a number. In max-folders-in-folder rule.\n'
-    );
+    ExpectUtil.RuleError.invalidNumberField(RULE_NAME, 'quantity', '1');
   });
 
   test('should display rule passed status when the verification passed', () => {

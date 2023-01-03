@@ -100,6 +100,17 @@ Exec time:    00:00:00.001
 }
 ```
 
+7. Check the length of folders names in a directory:
+
+```json
+{
+  "name": "folder-name-size-in-folder",
+  "min": 3,
+  "max": 10,
+  "folder": "source"
+}
+```
+
 To skip a rule use the skip field:
 
 ```json
