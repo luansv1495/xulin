@@ -4,6 +4,8 @@ import { main } from '../../../src/index';
 import { RuleNameEnum } from '../../../src/rules/rule.model';
 import { ErrorMessage, FileSystem } from '../../../src/utils';
 
+jest.mock('../../../src/utils/process.util');
+
 describe('Config tests', () => {
   beforeAll(() => {
     jest.spyOn(process.stdout, 'write').mockImplementationOnce(() => false);

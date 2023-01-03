@@ -98,3 +98,24 @@ export class FolderNameNotMatchInRuleError extends RuleError {
     super(`${grey(ruleName)}: Folder ${grey(folderName)} not match.`);
   }
 }
+
+export class QuantityIsInvalidInRuleError extends RuleError {
+  constructor(result: string, ruleName: string) {
+    /* istanbul ignore next */
+    super(`Field quantity with value ${result} In ${ruleName} rule.`);
+  }
+}
+
+export class MaxMinIsInvalidInRuleError extends RuleError {
+  constructor(result: string, ruleName: string, fieldName: string) {
+    /* istanbul ignore next */
+    super(`Field ${fieldName} with value ${result} In ${ruleName} rule.`);
+  }
+}
+
+export class FilenameSizeInRuleError extends RuleError {
+  constructor(fileName: string, ruleName: string) {
+    /* istanbul ignore next */
+    super(`${grey(ruleName)}: File ${grey(fileName)} not match.`);
+  }
+}

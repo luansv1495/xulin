@@ -29,23 +29,17 @@ export class FolderNameInFolderRule extends BaseRule {
   }
 
   getInvalidFolderInFolder = (foldersInFolder: string[]): string[] => {
-    const invalidFolders = foldersInFolder.filter((folder) => {
-      if (!this.rule.names.includes(folder)) {
-        return true;
-      }
-      return false;
-    });
+    const invalidFolders = foldersInFolder.filter(
+      (folder) => !this.rule.names.includes(folder)
+    );
 
     return invalidFolders;
   };
 
   getValidFolderInFolder = (foldersInFolder: string[]): string[] => {
-    const validFolders = foldersInFolder.filter((folder) => {
-      if (this.rule.names.includes(folder)) {
-        return true;
-      }
-      return false;
-    });
+    const validFolders = foldersInFolder.filter((folder) =>
+      this.rule.names.includes(folder)
+    );
 
     return validFolders;
   };

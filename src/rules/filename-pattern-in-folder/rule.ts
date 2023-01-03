@@ -32,18 +32,15 @@ export class FilenamePatternInFolderRule extends BaseRule {
     filesInFolder: string[],
     validFilesInFolder: string[]
   ): string[] => {
-    const invalidFiles = filesInFolder.filter((fileInFolder) => {
-      if (!validFilesInFolder.includes(fileInFolder)) {
-        return true;
-      }
-      return false;
-    });
+    const invalidFiles = filesInFolder.filter(
+      (fileInFolder) => !validFilesInFolder.includes(fileInFolder)
+    );
 
     return invalidFiles;
   };
 
   customVerify(rootDir: string): VerifyRuleState {
-    const filesInFolder = FileSystem.getFilesInFolder(
+    const filesInFolder = FileSystem.getDeepFilesInFolder(
       rootDir,
       this.rule.folder,
       []

@@ -1,6 +1,6 @@
 import fg from 'fast-glob';
 import fs from 'fs';
-import { join } from 'path';
+import path, { join } from 'path';
 
 export const FileSystem = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,7 +16,7 @@ export const FileSystem = {
     return fs.existsSync(path);
   },
 
-  getFilesInFolder: (
+  getDeepFilesInFolder: (
     rootDir: string,
     folder: string,
     files: string[]
@@ -27,7 +27,7 @@ export const FileSystem = {
 
     items.forEach((item) => {
       if (item.isDirectory()) {
-        files = FileSystem.getFilesInFolder(
+        files = FileSystem.getDeepFilesInFolder(
           rootDir,
           join(folder, item.name),
           files
@@ -36,6 +36,18 @@ export const FileSystem = {
         files.push(join(completeFolderPath, item.name));
       }
     });
+
+    return files;
+  },
+
+  getFilesInFolder: (rootDir: string, folder: string): string[] => {
+    const completeFolderPath = join(rootDir, folder);
+
+    const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
+
+    const files = items
+      .filter((item) => item.isFile())
+      .map((item) => join(completeFolderPath, item.name));
 
     return files;
   },
@@ -61,5 +73,12 @@ export const FileSystem = {
     const items = fs.readdirSync(completeFolderPath, { withFileTypes: true });
 
     return items.filter((item) => item.isDirectory()).map((item) => item.name);
+  },
+
+  getFilename: (completePath: string): string => {
+    const basePath = path.parse(completePath).base;
+    const basePathArray = basePath.split('.');
+    basePathArray.pop();
+    return basePathArray.join('.');
   }
 };
