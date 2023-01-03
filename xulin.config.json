@@ -1,0 +1,42 @@
+{
+  "rules": [
+    {
+      "name": "filename-pattern-in-folder",
+      "patterns": [
+        "*.ts"
+      ],
+      "folder": "src"
+    },
+    {
+      "name": "folder-name-in-folder",
+      "names": [
+        "config",
+        "rules",
+        "error",
+        "utils",
+        "validation"
+      ],
+      "folder": "src"
+    },
+    {
+      "name": "max-files-in-folder",
+      "quantity": 2,
+      "folder": "src/config"
+    },
+    {
+      "name": "filename-pattern-in-folder",
+      "patterns": [
+        "*.validation.ts"
+      ],
+      "folder": "src/validation/rules"
+    },
+    {
+      "name": "folder-name-in-folder",
+      "names": [
+        "rules",
+        "generic-validations"
+      ],
+      "folder": "src/validation"
+    }
+  ]
+}

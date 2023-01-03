@@ -29,6 +29,7 @@
     "lint": "eslint .",
     "prepare": "husky install",
     "test": "jest",
+    "test:arch": "node ./bin/xulin .",
     "test:typecheck": "tsc --noEmit",
     "build:prod": "npm run clean:some && tsc -p . --sourceMap false",
     "publish:npm": "npm run build:prod && npm publish --access=public"

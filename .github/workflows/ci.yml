@@ -32,6 +32,20 @@ jobs:
       run: npm install
     - name: Check types
       run: npm run test:typecheck
+
+  arch:
+    name: Check architecture
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+        cache: 'npm'
+    - name: Install Packages
+      run: npm install
+    - name: Check arch
+      run: npm run test:arch
       
   test:
     name: Tests
