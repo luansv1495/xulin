@@ -24,8 +24,6 @@ export const main = (): void => {
       const config = configModule.getConfigFile();
 
       if (config) {
-        //Logger.excludeErrorLogger();
-
         rulesModule.verify();
       }
     }

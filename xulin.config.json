@@ -2,20 +2,12 @@
   "rules": [
     {
       "name": "filename-pattern-in-folder",
-      "patterns": [
-        "*.ts"
-      ],
+      "patterns": ["*.ts"],
       "folder": "src"
     },
     {
       "name": "folder-name-in-folder",
-      "names": [
-        "config",
-        "rules",
-        "error",
-        "utils",
-        "validation"
-      ],
+      "names": ["config", "rules", "error", "utils", "validation"],
       "folder": "src"
     },
     {
@@ -25,17 +17,12 @@
     },
     {
       "name": "filename-pattern-in-folder",
-      "patterns": [
-        "*.validation.ts"
-      ],
+      "patterns": ["*.validation.ts"],
       "folder": "src/validation/rules"
     },
     {
       "name": "folder-name-in-folder",
-      "names": [
-        "rules",
-        "generic-validations"
-      ],
+      "names": ["rules", "generic-validations"],
       "folder": "src/validation"
     }
   ]

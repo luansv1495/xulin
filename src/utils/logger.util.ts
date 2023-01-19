@@ -9,9 +9,7 @@ import {
   bold
 } from 'kleur';
 import moment from 'moment';
-import fs from 'fs';
 import { VerifyStateEnum } from '../rules/rule.model';
-import { InfoMessage } from './strings.util';
 
 export const Logger = {
   error: (errorName: string, message: string, nivel?: number): void => {
@@ -20,18 +18,6 @@ export const Logger = {
     const errorMessage = tabSpace + title + errorName + ' ' + message + '\n';
 
     process.stdout.write(errorMessage);
-
-    fs.writeFileSync('./xulin-error.log', errorMessage);
-  },
-
-  excludeErrorLogger: (): void => {
-    const exists = fs.existsSync('./xulin-error.log');
-
-    if (exists) {
-      Logger.info(InfoMessage.removeErrorLog);
-
-      fs.rmSync('./xulin-error.log');
-    }
   },
 
   info: (message: string): void => {

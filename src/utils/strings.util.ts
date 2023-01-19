@@ -1,6 +1,5 @@
 export enum InfoMessage {
   loadConfig = 'Loading config...',
-  removeErrorLog = 'Removing error log file....',
   execRules = 'Executing rules...'
 }
 
