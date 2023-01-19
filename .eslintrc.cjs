@@ -10,7 +10,12 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   root: true,
   rules: {
-    'prettier/prettier': 2,
+    'prettier/prettier': [
+      2,
+      {
+        endOfLine: 'auto'
+      }
+    ],
     '@typescript-eslint/ban-types': 2,
     '@typescript-eslint/explicit-function-return-type': 2,
     '@typescript-eslint/member-ordering': [

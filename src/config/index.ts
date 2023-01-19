@@ -9,7 +9,7 @@ export class ConfigModule {
 
   getConfigFile = (): ConfigModel | undefined => {
     const jsonData = FileSystem.getJsonFile(
-      join(this.rootDir, 'xulin.config.json')
+      join(this.rootDir, 'xulin.config.json').replace(/\\/g, '/')
     );
 
     this.validate(jsonData);
