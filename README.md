@@ -89,7 +89,7 @@ Exec time:    00:00:00.001
 }
 ```
 
-6. Check the length of filenames in a directory:
+5. Check the length of filenames in a directory:
 
 ```json
 {
@@ -100,7 +100,7 @@ Exec time:    00:00:00.001
 }
 ```
 
-7. Check the length of folders names in a directory:
+6. Check the length of folders names in a directory:
 
 ```json
 {
