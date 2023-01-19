@@ -33,7 +33,7 @@ export class FilenamePatternInFolderRule extends BaseRule {
     validFilesInFolder: string[]
   ): string[] => {
     const invalidFiles = filesInFolder.filter(
-      (fileInFolder) => !validFilesInFolder.includes(fileInFolder)
+      (fileInFolder: string) => !validFilesInFolder.includes(fileInFolder)
     );
 
     return invalidFiles;
@@ -60,7 +60,7 @@ export class FilenamePatternInFolderRule extends BaseRule {
     if (invalidFilesInFolder.length != 0) {
       Logger.handler(VerifyStateEnum.failed, this.verifyMessage);
 
-      invalidFilesInFolder.forEach((invalidFile) => {
+      invalidFilesInFolder.forEach((invalidFile: string) => {
         new FilePatternNotMatchInRuleError(
           invalidFile,
           this.rule.name

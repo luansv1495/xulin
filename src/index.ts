@@ -9,7 +9,7 @@ import {
 import { RulesModule } from './rules';
 import { ConfigModule } from './config';
 
-export const main = () => {
+export const main = (): void => {
   try {
     Logger.info(InfoMessage.loadConfig);
 

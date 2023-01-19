@@ -28,7 +28,7 @@ describe('Filename pattern in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.unexpectedField(RULE_NAME, 'fakeField');
+    ExpectUtil.ruleError.unexpectedField(RULE_NAME, 'fakeField');
   });
 
   test('should display error when folder field not exists', () => {
@@ -38,7 +38,7 @@ describe('Filename pattern in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'folder');
+    ExpectUtil.ruleError.requiredField(RULE_NAME, 'folder');
   });
 
   test('should display error when patterns field not exists', () => {
@@ -50,7 +50,7 @@ describe('Filename pattern in folder tests', () => {
 
     main();
 
-    ExpectUtil.RuleError.requiredField(RULE_NAME, 'patterns');
+    ExpectUtil.ruleError.requiredField(RULE_NAME, 'patterns');
   });
 
   test('should display error when folder field is invalid', () => {
@@ -62,10 +62,7 @@ describe('Filename pattern in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Field folder with value "true" is not a string. In filename-pattern-in-folder rule.\n'
-    );
+    ExpectUtil.ruleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
   test('should display error when pattern field is invalid', () => {
@@ -79,10 +76,7 @@ describe('Filename pattern in folder tests', () => {
 
     main();
 
-    expect(process.stdout.write).toBeCalledWith(
-      red('ERROR: ') +
-        'RuleError Pattern with value "folder" is not a file. In filename-pattern-in-folder rule.\n'
-    );
+    ExpectUtil.ruleError.invalidFileField(RULE_NAME, 'pattern', 'folder');
   });
 
   test('should display rule passed status when the verification passed', () => {

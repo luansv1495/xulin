@@ -74,7 +74,7 @@ export class FolderIsInvalidInRuleError extends RuleError {
 export class PatternsIsInvalidInRuleError extends RuleError {
   constructor(result: string, ruleName: string) {
     /* istanbul ignore next */
-    super(`Pattern with value ${result} In ${ruleName} rule.`);
+    super(`Field pattern with value ${result} In ${ruleName} rule.`);
   }
 }
 
@@ -88,7 +88,7 @@ export class FilePatternNotMatchInRuleError extends RuleError {
 export class FolderNameIsInvalidInRuleError extends RuleError {
   constructor(result: string, ruleName: string) {
     /* istanbul ignore next */
-    super(`Folder name with value ${result} In ${ruleName} rule.`);
+    super(`Field names with value ${result} In ${ruleName} rule.`);
   }
 }
 
@@ -116,6 +116,13 @@ export class MaxMinIsInvalidInRuleError extends RuleError {
 export class FilenameSizeInRuleError extends RuleError {
   constructor(fileName: string, ruleName: string) {
     /* istanbul ignore next */
-    super(`${grey(ruleName)}: File ${grey(fileName)} not match.`);
+    super(`${grey(ruleName)}: Filename ${grey(fileName)} not match.`);
+  }
+}
+
+export class FolderNameSizeInRuleError extends RuleError {
+  constructor(fileName: string, ruleName: string) {
+    /* istanbul ignore next */
+    super(`${grey(ruleName)}: Folder name ${grey(fileName)} not match.`);
   }
 }

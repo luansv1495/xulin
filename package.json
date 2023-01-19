@@ -25,10 +25,11 @@
     "start": "npm run build && npm run global",
     "build": "npm run clean:some && tsc -p .",
     "global": "npm i -g && cd fixtures/example && xulin .",
-    "clean:some": "rm -rf ./lib",
+    "clean:some": "rimraf -rf ./lib",
     "lint": "eslint .",
     "prepare": "husky install",
     "test": "jest",
+    "test:arch": "node ./bin/xulin .",
     "test:typecheck": "tsc --noEmit",
     "build:prod": "npm run clean:some && tsc -p . --sourceMap false",
     "publish:npm": "npm run build:prod && npm publish --access=public"

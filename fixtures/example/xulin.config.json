@@ -2,7 +2,6 @@
   "rules": [
     {
       "name": "filename-pattern-in-folder",
-      "skip": false,
       "patterns": [
         "*.ts"
       ],
@@ -10,7 +9,6 @@
     },
     {
       "name": "folder-name-in-folder",
-      "skip": false,
       "names": [
         "services",
         "pages",
@@ -20,19 +18,22 @@
     },
     {
       "name": "max-files-in-folder",
-      "skip": false,
       "quantity": 0,
       "folder": "source"
     },
     {
       "name": "max-folders-in-folder",
-      "skip": false,
       "quantity": 1,
       "folder": "source/services"
     },
     {
       "name": "filename-size-in-folder",
-      "skip": false,
+      "min": 3,
+      "max": 16,
+      "folder": "source"
+    },
+    {
+      "name": "folder-name-size-in-folder",
       "min": 3,
       "max": 10,
       "folder": "source"

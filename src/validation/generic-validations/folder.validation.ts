@@ -11,7 +11,9 @@ export const validateFolder = (
     return `"${folder}" is invalid.`;
   } else if (folder.split('.').length != 1) {
     return `"${folder}" is not a folder.`;
-  } else if (!FileSystem.exists(path.join(rootDir, folder))) {
+  } else if (
+    !FileSystem.exists(path.join(rootDir, folder).replace(/\\/g, '/'))
+  ) {
     return `"${folder}" not found.`;
   }
   return null;

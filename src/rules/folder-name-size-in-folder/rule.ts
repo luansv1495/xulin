@@ -1,5 +1,5 @@
 import { grey } from 'kleur';
-import { FilenameSizeInRuleError } from '../../error';
+import { FolderNameSizeInRuleError } from '../../error';
 import { FileSystem, Logger } from '../../utils';
 import {
   BaseValidation,
@@ -11,7 +11,7 @@ import {
 import { BaseRule } from '../base.rule';
 import { RuleModel, VerifyRuleState, VerifyStateEnum } from '../rule.model';
 
-export class FilenameSizeInFolderRule extends BaseRule {
+export class FolderNameSizeInFolderRule extends BaseRule {
   validations: BaseValidation[] = [
     new ContainsUnexpectFieldValidation(),
     new ContainsRequiredFieldsValidation(),
@@ -22,7 +22,7 @@ export class FilenameSizeInFolderRule extends BaseRule {
   constructor(rule: RuleModel) {
     super(rule);
     if (rule.min != undefined && rule.max != undefined) {
-      this.verifyMessage = `Filenames must contain a minimum of ${grey(
+      this.verifyMessage = `Folders names must contain a minimum of ${grey(
         rule.min
       )} characters and a maximum of ${grey(rule.max)} characters in ${grey(
         rule.folder
@@ -30,55 +30,60 @@ export class FilenameSizeInFolderRule extends BaseRule {
     }
   }
 
-  getValidFiles = (filesInFolder: string[]): string[] => {
-    const validFiles = filesInFolder.filter((file: string) => {
-      const length = FileSystem.getFilename(file).length;
+  getValidFolders = (foldersInFolder: string[]): string[] => {
+    const validFolders = foldersInFolder.filter((folder: string) => {
+      const length = FileSystem.getFolderName(folder).length;
       return length >= this.rule.min && length <= this.rule.max;
     });
 
-    return validFiles;
+    return validFolders;
   };
 
-  getInvalidFiles = (
-    filesInFolder: string[],
-    validFiles: string[]
+  getInvalidFolders = (
+    foldersInFolder: string[],
+    validFolders: string[]
   ): string[] => {
-    const invalidFiles = filesInFolder.filter(
-      (file: string) => !validFiles.includes(file)
+    const invalidFolders = foldersInFolder.filter(
+      (folder: string) => !validFolders.includes(folder)
     );
 
-    return invalidFiles;
+    return invalidFolders;
   };
 
   customVerify(rootDir: string): VerifyRuleState {
-    const filesInFolder = FileSystem.getDeepFilesInFolder(
+    const foldersInFolder = FileSystem.getDeepFoldersInFolder(
       rootDir,
       this.rule.folder,
       []
     );
 
-    const validFiles = this.getValidFiles(filesInFolder);
+    const validFolders = this.getValidFolders(foldersInFolder);
 
-    const invalidFiles = this.getInvalidFiles(filesInFolder, validFiles);
+    const invalidFolders = this.getInvalidFolders(
+      foldersInFolder,
+      validFolders
+    );
 
-    if (invalidFiles.length != 0) {
+    if (invalidFolders.length != 0) {
       Logger.handler(VerifyStateEnum.failed, this.verifyMessage);
 
-      invalidFiles.forEach((invalidFile: string) => {
-        new FilenameSizeInRuleError(invalidFile, this.rule.name).showError(1);
+      invalidFolders.forEach((invalidFolder: string) => {
+        new FolderNameSizeInRuleError(invalidFolder, this.rule.name).showError(
+          1
+        );
       });
 
       return {
         state: VerifyStateEnum.failed,
-        passed: validFiles.length,
-        failed: invalidFiles.length
+        passed: validFolders.length,
+        failed: invalidFolders.length
       };
     } else {
       Logger.handler(VerifyStateEnum.passed, this.verifyMessage);
       return {
         state: VerifyStateEnum.passed,
-        passed: validFiles.length,
-        failed: invalidFiles.length
+        passed: validFolders.length,
+        failed: invalidFolders.length
       };
     }
   }

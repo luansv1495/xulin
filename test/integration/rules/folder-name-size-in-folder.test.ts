@@ -4,10 +4,10 @@ import { RuleNameEnum } from '../../../src/rules/rule.model';
 import { FileSystem } from '../../../src/utils';
 import { ExpectUtil, ConfigBuild, RuleBuild } from '../../utils';
 
-const RULE_NAME = RuleNameEnum.filenameSizeInFolder;
+const RULE_NAME = RuleNameEnum.folderNameSizeInFolder;
 jest.mock('../../../src/utils/process.util');
 
-describe('Filename size in folder tests', () => {
+describe('Folder name size in folder tests', () => {
   let config: ConfigBuild;
   let rule: RuleBuild;
 
@@ -133,7 +133,7 @@ describe('Filename size in folder tests', () => {
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
       bold(bgGreen(' PASS ')) +
-        ` Filenames must contain a minimum of ${grey(
+        ` Folders names must contain a minimum of ${grey(
           3
         )} characters and a maximum of ${grey(16)} characters in ${grey(
           'source/services'
@@ -143,9 +143,7 @@ describe('Filename size in folder tests', () => {
 
   test('should display rule fail status when the verification fail', () => {
     const fakeConfig = config
-      .withRule(
-        rule.withFolder('source/services').withMax(10).withMin(3).build()
-      )
+      .withRule(rule.withFolder('source').withMax(7).withMin(3).build())
       .build();
 
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
@@ -155,10 +153,10 @@ describe('Filename size in folder tests', () => {
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
       bold(bgRed(' FAIL ')) +
-        ` Filenames must contain a minimum of ${grey(
+        ` Folders names must contain a minimum of ${grey(
           3
-        )} characters and a maximum of ${grey(10)} characters in ${grey(
-          'source/services'
+        )} characters and a maximum of ${grey(7)} characters in ${grey(
+          'source'
         )} folder.\n`
     );
   });
@@ -166,7 +164,7 @@ describe('Filename size in folder tests', () => {
   test('should display rule skip status when the verification skip', () => {
     const fakeConfig = config
       .withRule(
-        rule.withFolder('source').withMax(10).withMin(3).withSkip(true).build()
+        rule.withFolder('source').withMax(7).withMin(3).withSkip(true).build()
       )
       .build();
 
@@ -177,9 +175,9 @@ describe('Filename size in folder tests', () => {
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       4,
       bold(bgYellow(' SKIP ')) +
-        ` Filenames must contain a minimum of ${grey(
+        ` Folders names must contain a minimum of ${grey(
           3
-        )} characters and a maximum of ${grey(10)} characters in ${grey(
+        )} characters and a maximum of ${grey(7)} characters in ${grey(
           'source'
         )} folder.\n`
     );
@@ -187,9 +185,7 @@ describe('Filename size in folder tests', () => {
 
   test('should display fails description when the verification fail', () => {
     const fakeConfig = config
-      .withRule(
-        rule.withFolder('source/services').withMax(10).withMin(3).build()
-      )
+      .withRule(rule.withFolder('source').withMax(7).withMin(3).build())
       .build();
 
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
@@ -200,8 +196,8 @@ describe('Filename size in folder tests', () => {
       5,
       '      ' +
         red('ERROR: ') +
-        `RuleError ${grey('filename-size-in-folder')}: Filename ${grey(
-          'fixtures/example/source/services/api.service.test.ts'
+        `RuleError ${grey('folder-name-size-in-folder')}: Folder name ${grey(
+          'fixtures/example/source/services'
         )} not match.\n`
     );
   });

@@ -89,11 +89,22 @@ Exec time:    00:00:00.001
 }
 ```
 
-6. Check the length of filenames in a directory:
+5. Check the length of filenames in a directory:
 
 ```json
 {
   "name": "filename-size-in-folder",
+  "min": 3,
+  "max": 10,
+  "folder": "source"
+}
+```
+
+6. Check the length of folders names in a directory:
+
+```json
+{
+  "name": "folder-name-size-in-folder",
   "min": 3,
   "max": 10,
   "folder": "source"
