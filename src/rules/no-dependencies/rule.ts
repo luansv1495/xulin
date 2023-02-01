@@ -66,7 +66,7 @@ export class NoDependenciesRule extends BaseRule {
     const checkPromisses = filesToCheck.map(async (file: string) => {
       const extension = FileSystem.getFileExtension(file);
 
-      if (!!extension && extension === 'ts') {
+      if (!!extension && ['ts', 'js'].includes(extension)) {
         const filesInCompile = await FileSystem.getImportsInTsFile(file);
 
         filesInCompile.forEach((item: string) => {

@@ -2,7 +2,7 @@
   "rules": [
     {
       "name": "filename-pattern-in-folder",
-      "patterns": ["*.ts"],
+      "patterns": ["*.js"],
       "folder": "source/services"
     },
     {

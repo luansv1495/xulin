@@ -1,6 +1,6 @@
 {
   "name": "xulin",
-  "version": "0.0.9-alpha.1",
+  "version": "0.0.9-alpha.2",
   "description": "Architecture test automation",
   "author": "Luan Viana",
   "license": "MIT",
@@ -24,7 +24,7 @@
   "scripts": {
     "start": "npm run build && npm run global",
     "build": "npm run clean:some && tsc -p .",
-    "global": "npm i -g && cd fixtures/example && xulin .",
+    "global": "npm i -g && cd fixtures/example && echo Typescript example && xulin . && cd ../example-js && echo Javascript example && xulin .",
     "clean:some": "rimraf -rf ./lib",
     "lint": "eslint .",
     "prepare": "husky install",

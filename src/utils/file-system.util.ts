@@ -133,7 +133,9 @@ export const FileSystem = {
   },
 
   getImportsInTsFile: async (path: string): Promise<string[]> => {
-    const result = await exec(`tsc ${path} --listFilesOnly`);
+    const result = await exec(
+      `tsc ${path} --listFilesOnly --allowJs --outDir ./`
+    );
     const output = result.stdout.trim();
 
     const fileList = output.split('\n');
