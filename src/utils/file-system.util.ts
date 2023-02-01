@@ -140,8 +140,12 @@ export const FileSystem = {
 
     const filesInCompile = fileList
       .filter((item: string) => !item.match('node_modules')) //remove node_modules files
+      .map((item: string) => item.replace('\r', ''))
       .filter((item: string) => item !== path) //remove the file itself
-      .map((item: string) => item.replace(process.cwd() + '/', '')); //remove complete path to files
+      .map((item: string) => {
+        const basePath = process.cwd().replace(/\\/g, '/');
+        return item.replace(basePath + '/', '');
+      }); //remove complete path to files
 
     return filesInCompile;
   }

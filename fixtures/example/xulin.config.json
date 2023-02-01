@@ -2,19 +2,12 @@
   "rules": [
     {
       "name": "filename-pattern-in-folder",
-      "patterns": [
-        "*.ts"
-      ],
+      "patterns": ["*.ts"],
       "folder": "source/services"
     },
     {
       "name": "folder-name-in-folder",
-      "names": [
-        "services",
-        "pages",
-        "configs",
-        "constants"
-      ],
+      "names": ["services", "pages", "configs", "constants"],
       "folder": "source"
     },
     {
@@ -42,9 +35,7 @@
     {
       "name": "no-dependencies",
       "folder": "source/configs",
-      "folders": [
-        "source/pages"
-      ]
+      "folders": ["source/pages"]
     }
   ]
 }

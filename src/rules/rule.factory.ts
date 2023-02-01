@@ -6,12 +6,7 @@ import { FolderNameSizeInFolderRule } from './folder-name-size-in-folder';
 import { MaxFilesInFolderRule } from './max-files-in-folder';
 import { MaxFoldersInFolderRule } from './max-folders-in-folder';
 import { NoDependenciesRule } from './no-dependencies';
-import {
-  VerifyStateEnum,
-  RuleModel,
-  RuleNameEnum,
-  VerifyRuleState
-} from './rule.model';
+import { RuleModel, RuleNameEnum, VerifyRuleState } from './rule.model';
 
 export class RuleFactory {
   props: BaseRuleProps;
