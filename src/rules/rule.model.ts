@@ -4,13 +4,15 @@ import { FolderNameInFolderModel } from './folder-name-in-folder';
 import { FolderNameSizeInFolderModel } from './folder-name-size-in-folder';
 import { MaxFilesInFolderModel } from './max-files-in-folder';
 import { MaxFoldersInFolderModel } from './max-folders-in-folder';
+import { NoDependenciesModel } from './no-dependencies';
 
 export type RuleModel = FilenamePatternInFolderModel &
   FilenameSizeInFolderModel &
   FolderNameInFolderModel &
   FolderNameSizeInFolderModel &
   MaxFilesInFolderModel &
-  MaxFoldersInFolderModel & {
+  MaxFoldersInFolderModel &
+  NoDependenciesModel & {
     name: RuleNameEnum;
     skip: boolean;
   };
@@ -26,7 +28,8 @@ export enum RuleNameEnum {
   maxFilesInFolder = 'max-files-in-folder',
   maxFoldersInFolder = 'max-folders-in-folder',
   filenameSizeInFolder = 'filename-size-in-folder',
-  folderNameSizeInFolder = 'folder-name-size-in-folder'
+  folderNameSizeInFolder = 'folder-name-size-in-folder',
+  noDependencies = 'no-dependencies'
 }
 
 export enum VerifyStateEnum {

@@ -9,6 +9,7 @@ module.exports = {
   cache: false,
   clearMocks: true,
   silent: false,
+  testTimeout: 30000,
   coverageThreshold: {
     global: {
       lines: 95,

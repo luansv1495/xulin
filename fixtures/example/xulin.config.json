@@ -12,7 +12,8 @@
       "names": [
         "services",
         "pages",
-        "configs"
+        "configs",
+        "constants"
       ],
       "folder": "source"
     },
@@ -37,6 +38,13 @@
       "min": 3,
       "max": 10,
       "folder": "source"
+    },
+    {
+      "name": "no-dependencies",
+      "folder": "source/configs",
+      "folders": [
+        "source/pages"
+      ]
     }
   ]
 }

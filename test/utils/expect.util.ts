@@ -66,6 +66,28 @@ export const ExpectUtil = {
         red('ERROR: ') +
           `RuleError Field min with value "${value}" is greater than or equal to the max value. In ${ruleName} rule.\n`
       );
+    },
+
+    invalidArrayField: (
+      ruleName: RuleNameEnum,
+      field: string,
+      value: unknown
+    ): void => {
+      expect(process.stdout.write).toBeCalledWith(
+        red('ERROR: ') +
+          `RuleError Field ${field} with value "${value}" is not a array. In ${ruleName} rule.\n`
+      );
+    },
+
+    invalidFolderListItemField: (
+      ruleName: RuleNameEnum,
+      field: string,
+      value: unknown
+    ): void => {
+      expect(process.stdout.write).toBeCalledWith(
+        red('ERROR: ') +
+          `RuleError Field ${field} with value "${value}" is equal the target folder. In ${ruleName} rule.\n`
+      );
     }
   }
 };

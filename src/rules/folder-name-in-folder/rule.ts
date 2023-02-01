@@ -8,10 +8,12 @@ import {
   IsValidFolderNameValidation,
   IsValidFolderValidation
 } from '../../validation';
-import { BaseRule } from '../base.rule';
-import { RuleModel, VerifyRuleState, VerifyStateEnum } from '../rule.model';
+import { BaseRule, BaseRuleProps } from '../base.rule';
+import { VerifyRuleState, VerifyStateEnum } from '../rule.model';
+import { FolderNameInFolderProps } from './model';
 
 export class FolderNameInFolderRule extends BaseRule {
+  expectedFields: string[] = Object.values(FolderNameInFolderProps) as string[];
   validations: BaseValidation[] = [
     new ContainsUnexpectFieldValidation(),
     new ContainsRequiredFieldsValidation(),
@@ -19,13 +21,16 @@ export class FolderNameInFolderRule extends BaseRule {
     new IsValidFolderNameValidation()
   ];
 
-  constructor(rule: RuleModel) {
-    super(rule);
-    if (rule.names) {
-      this.verifyMessage = `Folder in ${grey(
-        rule.folder
-      )} should must contain one of the names ${grey(rule.names.join(','))}.`;
-    }
+  constructor(props: BaseRuleProps) {
+    super(props);
+  }
+
+  makeVerifyMessage(): void {
+    this.verifyMessage = `Folder in ${grey(
+      this.rule.folder
+    )} should must contain one of the names ${grey(
+      this.rule.names.join(',')
+    )}.`;
   }
 
   getInvalidFolderInFolder = (foldersInFolder: string[]): string[] => {
@@ -44,9 +49,9 @@ export class FolderNameInFolderRule extends BaseRule {
     return validFolders;
   };
 
-  customVerify(rootDir: string): VerifyRuleState {
+  async customVerify(): Promise<VerifyRuleState> {
     const foldersInFolder = FileSystem.getFoldersInFolder(
-      rootDir,
+      this.rootDir,
       this.rule.folder
     );
 

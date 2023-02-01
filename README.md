@@ -111,14 +111,24 @@ Exec time:    00:00:00.001
 }
 ```
 
+7. Check if the files in a folder do not have dependencies on the specified directories:
+
+```json
+{
+  "name": "no-dependencies",
+  "folder": "source/configs",
+  "folders": ["source/pages"]
+}
+```
+
 To skip a rule use the skip field:
 
 ```json
 {
-    "name": "filename-pattern-in-folder",
-    "patterns": ["*.ts"],
-    "folder": "source/services"
-    "skip": true,
+  "name": "filename-pattern-in-folder",
+  "patterns": ["*.ts"],
+  "folder": "source/services",
+  "skip": true
 }
 ```
 

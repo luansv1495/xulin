@@ -65,7 +65,19 @@ describe('Filename pattern in folder tests', () => {
     ExpectUtil.ruleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
-  test('should display error when pattern field is invalid', () => {
+  test('should display error when patterns field is not a array', () => {
+    const fakeConfig = config
+      .withRule(rule.withFolder('source/services').withPatterns('1').build())
+      .build();
+
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
+
+    main();
+
+    ExpectUtil.ruleError.invalidArrayField(RULE_NAME, 'patterns', '1');
+  });
+
+  test('should display error when patterns field is invalid', () => {
     const fakeConfig = config
       .withRule(
         rule.withFolder('source/services').withPatterns(['folder']).build()
@@ -76,7 +88,7 @@ describe('Filename pattern in folder tests', () => {
 
     main();
 
-    ExpectUtil.ruleError.invalidFileField(RULE_NAME, 'pattern', 'folder');
+    ExpectUtil.ruleError.invalidFileField(RULE_NAME, 'patterns', 'folder');
   });
 
   test('should display rule passed status when the verification passed', () => {

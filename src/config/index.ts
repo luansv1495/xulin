@@ -7,14 +7,12 @@ import { join } from 'path';
 export class ConfigModule {
   constructor(private rootDir: string, private rulesModule: RulesModule) {}
 
-  getConfigFile = (): ConfigModel | undefined => {
+  getConfigFile = (): void => {
     const jsonData = FileSystem.getJsonFile(
       join(this.rootDir, 'xulin.config.json').replace(/\\/g, '/')
     );
 
     this.validate(jsonData);
-
-    return jsonData;
   };
 
   validate = (jsonData: object): void => {

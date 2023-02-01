@@ -1,6 +1,10 @@
 import fg from 'fast-glob';
 import fs from 'fs';
 import path, { join } from 'path';
+import { promisify } from 'util';
+import childProcess from 'child_process';
+
+const exec = promisify(childProcess.exec);
 
 export const FileSystem = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -115,5 +119,30 @@ export const FileSystem = {
   getFolderName: (completePath: string): string => {
     const basePath = path.parse(completePath).base;
     return basePath;
+  },
+
+  getFileExtension: (path: string): string | null => {
+    const re = /(?:\.([^.]+))?$/;
+    const extension = re.exec(path);
+
+    if (extension === null || extension[1] === undefined) {
+      return null;
+    }
+
+    return extension[1];
+  },
+
+  getImportsInTsFile: async (path: string): Promise<string[]> => {
+    const result = await exec(`tsc ${path} --listFilesOnly`);
+    const output = result.stdout.trim();
+
+    const fileList = output.split('\n');
+
+    const filesInCompile = fileList
+      .filter((item: string) => !item.match('node_modules')) //remove node_modules files
+      .filter((item: string) => item !== path) //remove the file itself
+      .map((item: string) => item.replace(process.cwd() + '/', '')); //remove complete path to files
+
+    return filesInCompile;
   }
 };
