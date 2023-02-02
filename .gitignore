@@ -14,3 +14,5 @@ node_modules/
 # Other files
 yarn.lock
 .DS_Store
+
+package-lock.json
