@@ -7,10 +7,12 @@ import {
   IsValidQuantityValidation,
   IsValidFolderValidation
 } from '../../validation';
-import { BaseRule } from '../base.rule';
-import { RuleModel, VerifyRuleState, VerifyStateEnum } from '../rule.model';
+import { BaseRule, BaseRuleProps } from '../base.rule';
+import { VerifyRuleState, VerifyStateEnum } from '../rule.model';
+import { MaxFoldersInFolderProps } from './model';
 
 export class MaxFoldersInFolderRule extends BaseRule {
+  expectedFields: string[] = Object.values(MaxFoldersInFolderProps) as string[];
   validations: BaseValidation[] = [
     new ContainsUnexpectFieldValidation(),
     new ContainsRequiredFieldsValidation(),
@@ -18,18 +20,19 @@ export class MaxFoldersInFolderRule extends BaseRule {
     new IsValidQuantityValidation()
   ];
 
-  constructor(rule: RuleModel) {
-    super(rule);
-    if (rule.quantity != undefined) {
-      this.verifyMessage = `Folder ${grey(rule.folder)} should contain ${grey(
-        rule.quantity
-      )} folders.`;
-    }
+  constructor(props: BaseRuleProps) {
+    super(props);
   }
 
-  customVerify(rootDir: string): VerifyRuleState {
+  makeVerifyMessage(): void {
+    this.verifyMessage = `Folder ${grey(
+      this.rule.folder
+    )} should contain ${grey(this.rule.quantity)} folders.`;
+  }
+
+  async customVerify(): Promise<VerifyRuleState> {
     const foldersInFolder = FileSystem.getFoldersInFolder(
-      rootDir,
+      this.rootDir,
       this.rule.folder
     );
 

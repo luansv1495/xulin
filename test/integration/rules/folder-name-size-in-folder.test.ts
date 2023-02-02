@@ -164,7 +164,7 @@ describe('Folder name size in folder tests', () => {
   test('should display rule skip status when the verification skip', () => {
     const fakeConfig = config
       .withRule(
-        rule.withFolder('source').withMax(7).withMin(3).withSkip(true).build()
+        rule.withFolder('source').withMax(10).withMin(3).withSkip(true).build()
       )
       .build();
 
@@ -177,7 +177,7 @@ describe('Folder name size in folder tests', () => {
       bold(bgYellow(' SKIP ')) +
         ` Folders names must contain a minimum of ${grey(
           3
-        )} characters and a maximum of ${grey(7)} characters in ${grey(
+        )} characters and a maximum of ${grey(10)} characters in ${grey(
           'source'
         )} folder.\n`
     );
@@ -197,7 +197,7 @@ describe('Folder name size in folder tests', () => {
       '      ' +
         red('ERROR: ') +
         `RuleError ${grey('folder-name-size-in-folder')}: Folder name ${grey(
-          'fixtures/example/source/services'
+          'fixtures/example/source/constants'
         )} not match.\n`
     );
   });

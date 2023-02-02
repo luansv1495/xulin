@@ -8,10 +8,14 @@ import {
   IsValidFilenamePatternValidation,
   IsValidFolderValidation
 } from '../../validation';
-import { BaseRule } from '../base.rule';
-import { RuleModel, VerifyRuleState, VerifyStateEnum } from '../rule.model';
+import { BaseRule, BaseRuleProps } from '../base.rule';
+import { VerifyRuleState, VerifyStateEnum } from '../rule.model';
+import { FilenamePatternInFolderProps } from './model';
 
 export class FilenamePatternInFolderRule extends BaseRule {
+  expectedFields: string[] = Object.values(
+    FilenamePatternInFolderProps
+  ) as string[];
   validations: BaseValidation[] = [
     new ContainsUnexpectFieldValidation(),
     new ContainsRequiredFieldsValidation(),
@@ -19,13 +23,14 @@ export class FilenamePatternInFolderRule extends BaseRule {
     new IsValidFilenamePatternValidation()
   ];
 
-  constructor(rule: RuleModel) {
-    super(rule);
-    if (rule.patterns) {
-      this.verifyMessage = `Files in ${grey(
-        rule.folder
-      )} should contains ${grey(rule.patterns.join(','))}.`;
-    }
+  constructor(props: BaseRuleProps) {
+    super(props);
+  }
+
+  makeVerifyMessage(): void {
+    this.verifyMessage = `Files in ${grey(
+      this.rule.folder
+    )} should contains ${grey(this.rule.patterns.join(','))}.`;
   }
 
   getInvalidFilesInFolder = (
@@ -39,15 +44,15 @@ export class FilenamePatternInFolderRule extends BaseRule {
     return invalidFiles;
   };
 
-  customVerify(rootDir: string): VerifyRuleState {
+  async customVerify(): Promise<VerifyRuleState> {
     const filesInFolder = FileSystem.getDeepFilesInFolder(
-      rootDir,
+      this.rootDir,
       this.rule.folder,
       []
     );
 
     const validFilesInFolder = FileSystem.getFilesByPatternInFolder(
-      rootDir,
+      this.rootDir,
       this.rule.folder,
       this.rule.patterns
     );

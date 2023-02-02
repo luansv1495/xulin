@@ -74,7 +74,7 @@ export class FolderIsInvalidInRuleError extends RuleError {
 export class PatternsIsInvalidInRuleError extends RuleError {
   constructor(result: string, ruleName: string) {
     /* istanbul ignore next */
-    super(`Field pattern with value ${result} In ${ruleName} rule.`);
+    super(`Field patterns with value ${result} In ${ruleName} rule.`);
   }
 }
 
@@ -124,5 +124,30 @@ export class FolderNameSizeInRuleError extends RuleError {
   constructor(fileName: string, ruleName: string) {
     /* istanbul ignore next */
     super(`${grey(ruleName)}: Folder name ${grey(fileName)} not match.`);
+  }
+}
+
+export class FolderInListIsInvalidInRuleError extends RuleError {
+  constructor(result: string, ruleName: string) {
+    /* istanbul ignore next */
+    super(`Field folders with value ${result} In ${ruleName} rule.`);
+  }
+}
+
+export class FolderInListIsEqualToTargetFolderInRuleError extends RuleError {
+  constructor(result: string, ruleName: string) {
+    /* istanbul ignore next */
+    super(`Field folders with value ${result} In ${ruleName} rule.`);
+  }
+}
+
+export class FileContainsInvalidDependenciesInRuleError extends RuleError {
+  constructor(targetFile: string, invalidDependence: string, ruleName: string) {
+    /* istanbul ignore next */
+    super(
+      `${grey(ruleName)}: File ${grey(
+        targetFile
+      )} contains dependencies of ${invalidDependence}.`
+    );
   }
 }

@@ -2,23 +2,17 @@
   "rules": [
     {
       "name": "filename-pattern-in-folder",
-      "patterns": [
-        "*.ts"
-      ],
+      "patterns": ["*.ts"],
       "folder": "source/services"
     },
     {
       "name": "folder-name-in-folder",
-      "names": [
-        "services",
-        "pages",
-        "configs"
-      ],
+      "names": ["services", "pages", "configs", "constants"],
       "folder": "source"
     },
     {
       "name": "max-files-in-folder",
-      "quantity": 0,
+      "quantity": 1,
       "folder": "source"
     },
     {
@@ -37,6 +31,11 @@
       "min": 3,
       "max": 10,
       "folder": "source"
+    },
+    {
+      "name": "no-dependencies",
+      "folder": "source/configs",
+      "folders": ["source/constants"]
     }
   ]
 }

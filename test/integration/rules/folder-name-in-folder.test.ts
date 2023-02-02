@@ -65,6 +65,18 @@ describe('Folder name in folder tests', () => {
     ExpectUtil.ruleError.invalidStringField(RULE_NAME, 'folder', 'true');
   });
 
+  test('should display error when names field is not a array', () => {
+    const fakeConfig = config
+      .withRule(rule.withFolder('source/services').withNames('1').build())
+      .build();
+
+    jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
+
+    main();
+
+    ExpectUtil.ruleError.invalidArrayField(RULE_NAME, 'names', '1');
+  });
+
   test('should display error when names field is invalid', () => {
     const fakeConfig = config
       .withRule(
@@ -84,7 +96,7 @@ describe('Folder name in folder tests', () => {
       .withRule(
         rule
           .withFolder('source')
-          .withNames(['services', 'pages', 'configs'])
+          .withNames(['services', 'pages', 'configs', 'constants'])
           .build()
       )
       .build();
@@ -99,7 +111,7 @@ describe('Folder name in folder tests', () => {
         ` Folder in ${grey(
           'source'
         )} should must contain one of the names ${grey(
-          'services,pages,configs'
+          'services,pages,configs,constants'
         )}.\n`
     );
   });

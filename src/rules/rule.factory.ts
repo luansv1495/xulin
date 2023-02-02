@@ -1,108 +1,63 @@
-import { BaseRule } from './base.rule';
-import {
-  FilenamePatternInFolderProps,
-  FilenamePatternInFolderRule
-} from './filename-pattern-in-folder';
-import {
-  FilenameSizeInFolderProps,
-  FilenameSizeInFolderRule
-} from './filename-size-in-folder';
-import {
-  FolderNameInFolderProps,
-  FolderNameInFolderRule
-} from './folder-name-in-folder';
-import {
-  FolderNameSizeInFolderProps,
-  FolderNameSizeInFolderRule
-} from './folder-name-size-in-folder';
-import {
-  MaxFilesInFolderProps,
-  MaxFilesInFolderRule
-} from './max-files-in-folder';
-import {
-  MaxFoldersInFolderProps,
-  MaxFoldersInFolderRule
-} from './max-folders-in-folder';
-import {
-  VerifyStateEnum,
-  RuleModel,
-  RuleNameEnum,
-  VerifyRuleState
-} from './rule.model';
+import { BaseRule, BaseRuleProps } from './base.rule';
+import { FilenamePatternInFolderRule } from './filename-pattern-in-folder';
+import { FilenameSizeInFolderRule } from './filename-size-in-folder';
+import { FolderNameInFolderRule } from './folder-name-in-folder';
+import { FolderNameSizeInFolderRule } from './folder-name-size-in-folder';
+import { MaxFilesInFolderRule } from './max-files-in-folder';
+import { MaxFoldersInFolderRule } from './max-folders-in-folder';
+import { NoDependenciesRule } from './no-dependencies';
+import { RuleModel, RuleNameEnum, VerifyRuleState } from './rule.model';
 
 export class RuleFactory {
-  constructor(private rule: RuleModel, private rootDir: string) {}
+  props: BaseRuleProps;
+
+  constructor(private rule: RuleModel, private rootDir: string) {
+    this.props = {
+      rule: this.rule,
+      rootDir: this.rootDir
+    };
+  }
 
   validate = (): void => {
-    new BaseRule(this.rule).validate({
-      rule: this.rule,
-      rootDir: this.rootDir,
-      expectedFields: Object.values(RuleNameEnum)
-    });
+    new BaseRule(this.props).validate();
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { skip, ...rest } = this.rule;
+    const props = { rule: rest, rootDir: this.rootDir } as BaseRuleProps;
 
     if (this.rule.name === RuleNameEnum.filenamePatternInFolder) {
-      new FilenamePatternInFolderRule(this.rule).validate({
-        rule: rest,
-        rootDir: this.rootDir,
-        expectedFields: Object.values(FilenamePatternInFolderProps) as string[]
-      });
+      new FilenamePatternInFolderRule(props).validate();
     } else if (this.rule.name === RuleNameEnum.folderNameInFolder) {
-      new FolderNameInFolderRule(this.rule).validate({
-        rule: rest,
-        rootDir: this.rootDir,
-        expectedFields: Object.values(FolderNameInFolderProps) as string[]
-      });
+      new FolderNameInFolderRule(props).validate();
     } else if (this.rule.name === RuleNameEnum.maxFilesInFolder) {
-      new MaxFilesInFolderRule(this.rule).validate({
-        rule: rest,
-        rootDir: this.rootDir,
-        expectedFields: Object.values(MaxFilesInFolderProps) as string[]
-      });
+      new MaxFilesInFolderRule(props).validate();
     } else if (this.rule.name === RuleNameEnum.maxFoldersInFolder) {
-      new MaxFoldersInFolderRule(this.rule).validate({
-        rule: rest,
-        rootDir: this.rootDir,
-        expectedFields: Object.values(MaxFoldersInFolderProps) as string[]
-      });
+      new MaxFoldersInFolderRule(props).validate();
     } else if (this.rule.name === RuleNameEnum.filenameSizeInFolder) {
-      new FilenameSizeInFolderRule(this.rule).validate({
-        rule: rest,
-        rootDir: this.rootDir,
-        expectedFields: Object.values(FilenameSizeInFolderProps) as string[]
-      });
+      new FilenameSizeInFolderRule(props).validate();
     } else if (this.rule.name === RuleNameEnum.folderNameSizeInFolder) {
-      new FolderNameSizeInFolderRule(this.rule).validate({
-        rule: rest,
-        rootDir: this.rootDir,
-        expectedFields: Object.values(FolderNameSizeInFolderProps) as string[]
-      });
+      new FolderNameSizeInFolderRule(props).validate();
+    } else if (this.rule.name === RuleNameEnum.noDependencies) {
+      new NoDependenciesRule(props).validate();
     }
   };
 
-  verify = (): VerifyRuleState => {
-    let state = {
-      state: VerifyStateEnum.skipped,
-      passed: 0,
-      failed: 0
-    } as VerifyRuleState;
-
-    if (this.rule.name === RuleNameEnum.filenamePatternInFolder) {
-      state = new FilenamePatternInFolderRule(this.rule).verify(this.rootDir);
-    } else if (this.rule.name === RuleNameEnum.folderNameInFolder) {
-      state = new FolderNameInFolderRule(this.rule).verify(this.rootDir);
-    } else if (this.rule.name === RuleNameEnum.maxFilesInFolder) {
-      state = new MaxFilesInFolderRule(this.rule).verify(this.rootDir);
-    } else if (this.rule.name === RuleNameEnum.maxFoldersInFolder) {
-      state = new MaxFoldersInFolderRule(this.rule).verify(this.rootDir);
-    } else if (this.rule.name === RuleNameEnum.filenameSizeInFolder) {
-      state = new FilenameSizeInFolderRule(this.rule).verify(this.rootDir);
-    } else if (this.rule.name === RuleNameEnum.folderNameSizeInFolder) {
-      state = new FolderNameSizeInFolderRule(this.rule).verify(this.rootDir);
+  verify = async (): Promise<VerifyRuleState> => {
+    switch (this.rule.name) {
+      case RuleNameEnum.filenamePatternInFolder:
+        return await new FilenamePatternInFolderRule(this.props).verify();
+      case RuleNameEnum.folderNameInFolder:
+        return await new FolderNameInFolderRule(this.props).verify();
+      case RuleNameEnum.maxFilesInFolder:
+        return await new MaxFilesInFolderRule(this.props).verify();
+      case RuleNameEnum.maxFoldersInFolder:
+        return await new MaxFoldersInFolderRule(this.props).verify();
+      case RuleNameEnum.filenameSizeInFolder:
+        return await new FilenameSizeInFolderRule(this.props).verify();
+      case RuleNameEnum.folderNameSizeInFolder:
+        return await new FolderNameSizeInFolderRule(this.props).verify();
+      case RuleNameEnum.noDependencies:
+        return await new NoDependenciesRule(this.props).verify();
     }
-
-    return state;
   };
 }

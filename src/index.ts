@@ -9,7 +9,7 @@ import {
 import { RulesModule } from './rules';
 import { ConfigModule } from './config';
 
-export const main = (): void => {
+export const main = async (): Promise<void> => {
   try {
     Logger.info(InfoMessage.loadConfig);
 
@@ -21,11 +21,9 @@ export const main = (): void => {
       const rulesModule = new RulesModule(rootDir);
       const configModule = new ConfigModule(rootDir, rulesModule);
 
-      const config = configModule.getConfigFile();
+      configModule.getConfigFile();
 
-      if (config) {
-        rulesModule.verify();
-      }
+      await rulesModule.verify();
     }
   } catch (error: unknown) {
     if ((error as Error).name === 'SyntaxError') {

@@ -3,12 +3,13 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testPathIgnorePatterns: ['<rootDir>/fixtures/example'],
+  testPathIgnorePatterns: ['<rootDir>/fixtures'],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.ts*'],
   cache: false,
   clearMocks: true,
   silent: false,
+  testTimeout: 30000,
   coverageThreshold: {
     global: {
       lines: 95,

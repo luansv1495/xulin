@@ -10,6 +10,7 @@ export class RuleBuild {
   max?: unknown;
   min?: unknown;
   fakeField?: unknown;
+  folders?: unknown;
 
   constructor(name: RuleNameEnum) {
     this.name = name;
@@ -55,6 +56,11 @@ export class RuleBuild {
     return this;
   };
 
+  withFolders = (folders: unknown): RuleBuild => {
+    this.folders = folders;
+    return this;
+  };
+
   build = (): object => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rule: any = {
@@ -88,6 +94,10 @@ export class RuleBuild {
 
     if (this.quantity != undefined) {
       rule.quantity = this.quantity;
+    }
+
+    if (this.folders != undefined) {
+      rule.folders = this.folders;
     }
 
     return rule;

@@ -32,7 +32,9 @@ describe('Rules tests', () => {
     );
   });
 
-  test('should display suite stats count when handler rules is finish', () => {
+  test('should display suite stats count when handler rules is finish', async () => {
+    expect.assertions(1);
+
     const fakeConfig = {
       rules: [
         {
@@ -45,7 +47,7 @@ describe('Rules tests', () => {
     };
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
-    main();
+    await main();
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       5,
@@ -55,12 +57,13 @@ describe('Rules tests', () => {
     );
   });
 
-  test('should display all stats count when handler rules is finish', () => {
+  test('should display all stats count when handler rules is finish', async () => {
+    expect.assertions(1);
+
     const fakeConfig = {
       rules: [
         {
           name: RuleNameEnum.filenamePatternInFolder,
-          skip: false,
           patterns: ['*.ts'],
           folder: 'source/services'
         }
@@ -68,7 +71,7 @@ describe('Rules tests', () => {
     };
     jest.spyOn(FileSystem, 'getJsonFile').mockReturnValueOnce(fakeConfig);
 
-    main();
+    await main();
 
     expect(process.stdout.write).toHaveBeenNthCalledWith(
       6,

@@ -8,10 +8,14 @@ import {
   IsValidFolderValidation,
   IsValidMaxMinValidation
 } from '../../validation';
-import { BaseRule } from '../base.rule';
-import { RuleModel, VerifyRuleState, VerifyStateEnum } from '../rule.model';
+import { BaseRule, BaseRuleProps } from '../base.rule';
+import { VerifyRuleState, VerifyStateEnum } from '../rule.model';
+import { FolderNameSizeInFolderProps } from './model';
 
 export class FolderNameSizeInFolderRule extends BaseRule {
+  expectedFields: string[] = Object.values(
+    FolderNameSizeInFolderProps
+  ) as string[];
   validations: BaseValidation[] = [
     new ContainsUnexpectFieldValidation(),
     new ContainsRequiredFieldsValidation(),
@@ -19,15 +23,16 @@ export class FolderNameSizeInFolderRule extends BaseRule {
     new IsValidMaxMinValidation()
   ];
 
-  constructor(rule: RuleModel) {
-    super(rule);
-    if (rule.min != undefined && rule.max != undefined) {
-      this.verifyMessage = `Folders names must contain a minimum of ${grey(
-        rule.min
-      )} characters and a maximum of ${grey(rule.max)} characters in ${grey(
-        rule.folder
-      )} folder.`;
-    }
+  constructor(props: BaseRuleProps) {
+    super(props);
+  }
+
+  makeVerifyMessage(): void {
+    this.verifyMessage = `Folders names must contain a minimum of ${grey(
+      this.rule.min
+    )} characters and a maximum of ${grey(this.rule.max)} characters in ${grey(
+      this.rule.folder
+    )} folder.`;
   }
 
   getValidFolders = (foldersInFolder: string[]): string[] => {
@@ -50,9 +55,9 @@ export class FolderNameSizeInFolderRule extends BaseRule {
     return invalidFolders;
   };
 
-  customVerify(rootDir: string): VerifyRuleState {
+  async customVerify(): Promise<VerifyRuleState> {
     const foldersInFolder = FileSystem.getDeepFoldersInFolder(
-      rootDir,
+      this.rootDir,
       this.rule.folder,
       []
     );

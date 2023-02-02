@@ -9,11 +9,23 @@ import {
   NameIsRequiredValidation,
   SkipIsNotABooleanValidation
 } from '../validation';
-import { RuleModel, VerifyRuleState, VerifyStateEnum } from './rule.model';
+import {
+  RuleModel,
+  RuleNameEnum,
+  VerifyRuleState,
+  VerifyStateEnum
+} from './rule.model';
+
+export interface BaseRuleProps {
+  rule: RuleModel;
+  rootDir: string;
+}
 
 export class BaseRule {
   rule: RuleModel;
   verifyMessage = '';
+  rootDir = '.';
+  expectedFields: string[] = Object.values(RuleNameEnum);
   validations: BaseValidation[] = [
     new IsNotObjectValidation(),
     new NameIsRequiredValidation(),
@@ -22,18 +34,23 @@ export class BaseRule {
     new SkipIsNotABooleanValidation()
   ];
 
-  constructor(rule: RuleModel) {
-    this.rule = rule;
+  constructor(props: BaseRuleProps) {
+    this.rule = props.rule;
+    this.rootDir = props.rootDir;
   }
 
-  validate(props: BaseValidationProps): void {
+  validate(): void {
     this.validations.forEach((validation: BaseValidation) =>
-      validation.validate(props)
+      validation.validate({
+        rule: this.rule,
+        rootDir: this.rootDir,
+        expectedFields: this.expectedFields
+      })
     );
   }
 
   /* istanbul ignore next */
-  customVerify(rootDir: string): VerifyRuleState {
+  async customVerify(): Promise<VerifyRuleState> {
     /* istanbul ignore next */
     return {
       state: VerifyStateEnum.skipped,
@@ -42,7 +59,15 @@ export class BaseRule {
     };
   }
 
-  verify(rootDir: string): VerifyRuleState {
+  /* istanbul ignore next */
+  makeVerifyMessage(): void {
+    /* istanbul ignore next */
+    return;
+  }
+
+  async verify(): Promise<VerifyRuleState> {
+    this.makeVerifyMessage();
+
     if (this.rule.skip === true) {
       Logger.handler(VerifyStateEnum.skipped, this.verifyMessage);
       return {
@@ -51,6 +76,6 @@ export class BaseRule {
         failed: 0
       };
     }
-    return this.customVerify(rootDir);
+    return this.customVerify();
   }
 }

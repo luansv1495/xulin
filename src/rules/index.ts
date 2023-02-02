@@ -40,24 +40,26 @@ export class RulesModule {
     Logger.stats(this.stats.suite, this.stats.all, this.rules.length, execTime);
   };
 
-  verify = (): void => {
+  verify = async (): Promise<void> => {
     Logger.info(InfoMessage.execRules);
 
     const startTime = new Date();
 
     process.stdout.write('\n');
 
-    this.rules.forEach((rule: RuleModel) => {
-      const result = new RuleFactory(rule, this.rootDir).verify();
+    const ruleVerifies = this.rules.map(async (rule: RuleModel) => {
+      const result = await new RuleFactory(rule, this.rootDir).verify();
       this.stats.suite[result.state] += 1;
       this.stats.all[VerifyStateEnum.failed] += result.failed;
       this.stats.all[VerifyStateEnum.passed] += result.passed;
     });
 
-    this.showStats(startTime);
+    await Promise.all(ruleVerifies).then(() => {
+      this.showStats(startTime);
 
-    if (this.stats.suite.failed >= 1) {
-      ProcessUtil.exit();
-    }
+      if (this.stats.suite.failed >= 1) {
+        ProcessUtil.exit();
+      }
+    });
   };
 }
